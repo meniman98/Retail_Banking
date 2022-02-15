@@ -10,7 +10,14 @@
   - Solofo RABONARIJAONA
 
 ## Development progress
-| Feature | Status | Date |
+| Task | Status | Date |
 |---------|--------|------|
-| Set up project structure | In progress | 15/02 |
-| Set up MysQL Database  | In progress | 15/02 |
+| Set up project structure | ✔️ | 15/02 |
+| Set up local MysQL Database  | 🚧 | 15/02 |
+| Test App and Mysql database connection | 🚧 | 15/02 |
+| Create entities | 🚧 | 15/02 |
+| Validate Customer entity attributes | 🚩 | 15/02 |
+| Update Customer entity based on feedback | 🚧 | 15/02 |
+| Which classes should have unit test to fullfil 100% test coverage requirement ? | 🚩 | 15/02 |
+| Write unit test for customer service class | :construction:| 15/02 |
+| Write code for customer service class | 🚧 | 15/02 |

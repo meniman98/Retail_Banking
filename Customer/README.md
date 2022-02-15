@@ -6,6 +6,8 @@
   1. Creating a customer profile based on the details provided by the customer
   2. Displaying customer's profile
 
+- Project structure design :
+![class diagram](https://github.com/meniman98/Retail_Banking/blob/customer/Customer/class_diagram_v1.png)
 - Developper
   - Solofo RABONARIJAONA
 

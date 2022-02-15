@@ -8,8 +8,7 @@ public class RetailBankingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RetailBankingApplication.class, args);
-//		test comment from Ahmed
-//		test comment for a branch
+//		You can only see this comment on my TestBranch
 	}
 
 }

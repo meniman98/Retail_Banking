@@ -1,5 +1,6 @@
 package com.pod2.microservice.customer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -24,6 +26,24 @@ public class Customer {
 	private String address;
 	private String dateOfBirth;
 	
+	@Transient
+	private List<AccountSummary> accountsSummary = new ArrayList<>();
+	
 	@OneToMany(fetch=FetchType.EAGER)
 	private List<CustomerCreationStatus> customerCreationStatus;
+
+	public Customer(Long customerId, String firstName, String lastName, String email, String mobileNumber,
+			String address, String dateOfBirth) {
+		super();
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.mobileNumber = mobileNumber;
+		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.customerCreationStatus = new ArrayList<>();
+	}
+	
+	
 }

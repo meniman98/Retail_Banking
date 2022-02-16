@@ -11,8 +11,17 @@ import lombok.Data;
 @Data
 public class CustomerCreationStatus {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String message;
-	
+
+	public CustomerCreationStatus() {
+		super();
+	}
+
+	public CustomerCreationStatus(String message) {
+		this();
+		this.message = message;
+	}
+
 }

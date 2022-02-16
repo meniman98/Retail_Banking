@@ -16,6 +16,11 @@ public class Account {
     private LocalDate dateOfCreation;
     private String accountType;
     private double balance;
-    private Customer customerId;
+    private Customer customer;
 
+    /*Creating a constructor for customerId only
+    * in order to ensure that a value is passed in*/
+    public Account(Customer customer) {
+        this.customer = customer;
+    }
 }

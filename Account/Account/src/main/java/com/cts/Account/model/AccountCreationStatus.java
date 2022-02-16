@@ -12,8 +12,11 @@ public class AccountCreationStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long AccountCreationStatusId;
-    private Account AccountId;
+    private Account account;
     private String message;
 
-
+    public AccountCreationStatus(Account account, String message) {
+        this.account = account;
+        this.message = message;
+    }
 }

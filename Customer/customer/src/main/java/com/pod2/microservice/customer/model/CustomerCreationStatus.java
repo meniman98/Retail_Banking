@@ -24,4 +24,12 @@ public class CustomerCreationStatus {
 		this.message = message;
 	}
 
+	public CustomerCreationStatus(Long id, String message) {
+		super();
+		this.id = id;
+		this.message = message;
+	}
+	
+	
+
 }

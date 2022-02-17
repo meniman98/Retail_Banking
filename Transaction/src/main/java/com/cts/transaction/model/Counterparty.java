@@ -14,6 +14,9 @@ public class Counterparty {
     @Column(name = "name")
     private String name;
 
+    public Counterparty() {
+    }
+
     public Counterparty(int counterparty_ID, String name) {
         super();
         this.counterpartyID = counterparty_ID;

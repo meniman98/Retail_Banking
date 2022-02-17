@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,14 +18,15 @@ public class Account {
     private LocalDate dateOfCreation;
     private String accountType;
     private double balance;
-
-
     private long customerId;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Statement> statementSet;
 
     /*Creating a constructor for customerId only
     * in order to ensure that a value is passed in*/
-    public Account(Customer customer) {
-        this.customer = customer;
+    public Account(long customer) {
+        this.customerId = customer;
     }
 
     @Override

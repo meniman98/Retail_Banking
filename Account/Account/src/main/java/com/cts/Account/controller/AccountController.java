@@ -7,6 +7,7 @@ import com.cts.Account.model.AccountCreationStatus;
 import com.cts.Account.model.Customer;
 import com.cts.Account.repo.AccountRepo;
 import com.cts.Account.repo.CustomerRepo;
+import com.cts.Account.repo.StatementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +28,16 @@ public class AccountController {
     @Autowired
     CustomerRepo customerRepo;
 
+    @Autowired
+    StatementRepo statementRepo;
+
     @PostMapping(Utils.CREATE_ACCOUNT)
     public AccountCreationStatus createAccount(@PathVariable Long customerId) {
         if (customerRepo.existsById(customerId)) {
 //            Make a new account, and pass in the customer ID
 //            as a parameter
             Customer retrievedCustomer = customerRepo.getById(customerId);
-            Account newAccount = new Account(retrievedCustomer);
+            Account newAccount = new Account(retrievedCustomer.getCustomerId());
             retrievedCustomer.getAccountSet().add(newAccount);
             accountRepo.save(newAccount);
             return new AccountCreationStatus
@@ -59,4 +63,22 @@ public class AccountController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(Utils.GET_ACCOUNT)
+    public Account getAccount(@PathVariable Long accountId) {
+        if (accountRepo.existsById(accountId)) {
+            return accountRepo.getById(accountId);
+        }
+        else if (!accountRepo.existsById(accountId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.ACCOUNT_NOT_FOUND);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping(Utils.GET_ACCOUNT_STATEMENT)
+//    public Statement getAccountStatement(@PathVariable Long accountId) {
+//
+//    }
 }

@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import com.pod2.microservice.customer.model.Customer;
 import com.pod2.microservice.customer.model.CustomerCreationStatus;
 import com.pod2.microservice.customer.service.CustomerService;
-import com.pod2.microservice.customer.service.CustomerServiceImpl;
 
 @WebMvcTest(CustomerRestController.class)
 public class CustomerRestControllerTest {
@@ -42,7 +41,7 @@ public class CustomerRestControllerTest {
 	private Customer validCustomer = new Customer(1L, "Test", "Test", "test@test.com", "0123456789", "1, Test France",
 			"01/01/1998");
 	private Customer invalidCustomer = new Customer(0L, "", "", "", "", "1, Test France", "01/01/1998");
-	private CustomerCreationStatus customerCreationStatus = new CustomerCreationStatus(1L, CustomerServiceImpl.MSG_CUSTOMER_CREATION_SUCCESS);
+	private CustomerCreationStatus customerCreationStatus = new CustomerCreationStatus(1L, this.customerService.MSG_CUSTOMER_CREATION_SUCCESS);
 	
 	private final Long SAVED_CUSTOMER_ID = 1L;
 	private final Long UNSAVED_CUSTOMER_ID = 5L;
@@ -63,7 +62,7 @@ public class CustomerRestControllerTest {
 		this.mockMvc.perform(post(this.URL_CREATE_CUSTOMER)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(customerJson).accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isCreated());
+		.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -82,34 +81,24 @@ public class CustomerRestControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(customerJson).accept(MediaType.APPLICATION_JSON))
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.id").value(this.customerCreationStatus.getId()))
 		.andExpect(jsonPath("$.message").value(this.customerCreationStatus.getMessage()));
 	}
 	
 	@Test
 	public void getCustomerDetailsWithExistingCustomerShouldReturnStatusOk() throws Exception {
-		String customerIdJson = this.gson.toJson(this.SAVED_CUSTOMER_ID);
-		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(customerIdJson).accept(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER + "?customerId=" + this.SAVED_CUSTOMER_ID))
 		.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void getCustomerDetailsWithNoneExistingCustomerShouldReturnStatusNotFound() throws Exception {
-		String customerIdJson = this.gson.toJson(this.UNSAVED_CUSTOMER_ID);
-		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(customerIdJson).accept(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER + "?customerId=" + this.UNSAVED_CUSTOMER_ID))
 		.andExpect(status().isNotFound());
 	}
 	
 	@Test
 	public void getCustomerDetailsWithExistingCustomerShouldReturnCustomerObject() throws Exception {
-		String customerIdJson = this.gson.toJson(this.SAVED_CUSTOMER_ID);
-		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(customerIdJson).accept(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get(this.URL_DETAILS_CUSTOMER + "?customerId=" + this.SAVED_CUSTOMER_ID))
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 		.andExpect(jsonPath("$.customerId").value(this.validCustomer.getCustomerId()))
 		.andExpect(jsonPath("$.dateOfBirth").value(this.validCustomer.getDateOfBirth()))

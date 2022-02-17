@@ -18,37 +18,43 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Autowired
 	private AccountMicroserviceProxy accountMicroserviceProxy;
 
 	@Value("${message.customer.creation.success}")
-	public static String MSG_CUSTOMER_CREATION_SUCCESS;
+	public String MSG_CUSTOMER_CREATION_SUCCESS;
 	@Value("${message.account.creation.success}")
-	public static String MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS;
+	public String MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS;
 	@Value("${message.account.creation.failure}")
-	public static String MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE;
-	
+	public String MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE;
+
 	@Override
 	public CustomerCreationStatus create(Customer customer) {
 		// create customer
 		Customer newCustomer = customerRepository.save(customer);
 		CustomerCreationStatus status = null;
 		// if success
-		if (null != newCustomer ) {
+		if (null != newCustomer) {
 			// set creation success status
 			status = new CustomerCreationStatus(MSG_CUSTOMER_CREATION_SUCCESS);
 			newCustomer.getCustomerCreationStatus().add(status);
 			// interact with Account service to create Savings & Current Account for
 			// the customer
 			CustomerCreationStatus accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE);
-			AccountCreationStatus accountCreationStatus = accountMicroserviceProxy.postCreateAccount(newCustomer.getCustomerId());
-			if (null != accountCreationStatus && !accountCreationStatus.getMessage().isEmpty()) {
-				accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE);
+			try {
+				AccountCreationStatus accountCreationStatus = accountMicroserviceProxy
+						.postCreateAccount(newCustomer.getCustomerId());
+				if (null != accountCreationStatus && !accountCreationStatus.getMessage().isEmpty()) {
+					accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE);
+				}
+			} catch (Exception e) {
+				// TODO : logg error
 			}
 			newCustomer.getCustomerCreationStatus().add(accountStatus);
 			// update new customer status
 			customerRepository.save(newCustomer);
+			return status;
 		}
 
 		return status;
@@ -58,9 +64,14 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer getDetailsById(Long customerId) {
 		Customer customer = this.customerRepository.findByCustomerId(customerId);
 		if (null != customer) {
-			List<AccountSummary> accountsSummary = this.accountMicroserviceProxy.getCustomerAccounts(customer.getCustomerId());
-			if (null != accountsSummary && !accountsSummary.isEmpty()) {
-				customer.setAccountsSummary(accountsSummary);
+			try {
+				List<AccountSummary> accountsSummary = this.accountMicroserviceProxy
+						.getCustomerAccounts(customer.getCustomerId());
+				if (null != accountsSummary && !accountsSummary.isEmpty()) {
+					customer.setAccountsSummary(accountsSummary);
+				}
+			} catch (Exception e) {
+				// TODO : logg error
 			}
 		}
 		return customer;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.pod2.microservice.customer.model.AccountCreationStatus;
 import com.pod2.microservice.customer.model.AccountSummary;
 
-@FeignClient(name="account-microservice")
+@FeignClient(name="account-microservice", url="localhost:8081/test")
 public interface AccountMicroserviceProxy {
 	@PostMapping("/createAccount")
 	public AccountCreationStatus postCreateAccount(Long customerId);

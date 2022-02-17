@@ -90,7 +90,7 @@ public class CustomerServiceTest {
 	@Test
 	public void testCreateValidCustomerAddCreationStatus() {
 		CustomerCreationStatus status = this.customerService.create(this.validCustomer);
-		assertEquals(CustomerServiceImpl.MSG_CUSTOMER_CREATION_SUCCESS, status.getMessage());
+		assertEquals(this.customerService.MSG_CUSTOMER_CREATION_SUCCESS, status.getMessage());
 	}
 
 	@Test

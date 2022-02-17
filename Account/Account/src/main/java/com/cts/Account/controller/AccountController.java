@@ -31,6 +31,7 @@ public class AccountController {
     @Autowired
     StatementRepo statementRepo;
 
+//    this method works very well
     @PostMapping(Utils.CREATE_ACCOUNT)
     public AccountCreationStatus createAccount(@PathVariable Long customerId) {
         if (customerRepo.existsById(customerId)) {
@@ -52,6 +53,7 @@ public class AccountController {
 
     }
 
+//    this method works great
     @GetMapping(Utils.GET_CUSTOMER_ACCOUNTS)
     public Set<Account> getCustomerAccounts(@PathVariable Long customerId) {
         if (customerRepo.existsById(customerId)) {
@@ -64,6 +66,7 @@ public class AccountController {
         }
     }
 
+//    This method works great
     @GetMapping(Utils.GET_ACCOUNT)
     public Account getAccount(@PathVariable Long accountId) {
         if (accountRepo.existsById(accountId)) {
@@ -77,8 +80,4 @@ public class AccountController {
         }
     }
 
-//    @GetMapping(Utils.GET_ACCOUNT_STATEMENT)
-//    public Statement getAccountStatement(@PathVariable Long accountId) {
-//
-//    }
 }

@@ -13,7 +13,7 @@ public class TransactionStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transactionStatusId;
-    private Account accountId;
+    private long accountId;
     private String message;
     private double sourceBalance;
     private double destinationBalance;

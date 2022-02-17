@@ -1,5 +1,6 @@
 package com.cts.Account.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account {
 
     @Id
@@ -28,6 +30,8 @@ public class Account {
     public Account(long customer) {
         this.customerId = customer;
     }
+
+    public Account() {}
 
     @Override
     public boolean equals(Object o) {

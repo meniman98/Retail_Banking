@@ -24,10 +24,10 @@
 | Write unit test (with Mockito) and code for customer service class implementation | ✅ | 15/02 - 16/02 |
 | Write unit test (with Mockito and MockMvc) and code for customer restController class | ✅ | 16/02 |
 | Add swagger 2 | ✅ | 16/02 |
-| Add logging and zipkin | ✅ | 16/02 |
-| Dockerize the microservice | 🚧 | 16/02 |
-| Integration test with Account Microservice | 🚧 | 16/02 |
-| Add security layer using JWT | 🚧 | 16/02 |
+| Add logging using sl4j and zipkin | ✅ | 16/02 |
+| Dockerize the microservice | 🚧 | 17/02 |
+| Integration test with Account Microservice | 🚧 | NA |
+| Add security layer using JWT | 🚧 | NA |
 
 ## Installation guide :
 ## Requirement :

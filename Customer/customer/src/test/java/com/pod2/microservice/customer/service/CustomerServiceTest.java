@@ -47,8 +47,8 @@ public class CustomerServiceTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		this.accountsSummary.add(new AccountSummary("12345", "Savings", "01/01/2022"));
-		this.accountsSummary.add(new AccountSummary("54321", "Current", "01/01/2022"));
+		this.accountsSummary.add(new AccountSummary("12345", "Savings", "01/01/2022", 1L, 500.0));
+		this.accountsSummary.add(new AccountSummary("54321", "Current", "01/01/2022", 2L, 500.0));
 
 		// Mock CustomerRepository
 		Mockito.when(this.customerRepository.save(this.validCustomer)).thenReturn(this.validCustomer);

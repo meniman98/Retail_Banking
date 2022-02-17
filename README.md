@@ -1,3 +1,3 @@
-# Retail_Banking
-Microservices app for a retail bank
+# Customer microservice
+Customer Microservices for a retail bank app
 

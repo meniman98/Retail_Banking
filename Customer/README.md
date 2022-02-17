@@ -30,12 +30,22 @@
 | Add security layer using JWT | 🚧 | NA |
 
 ## Installation guide :
-## Requirement :
-- Java 8
+### Requirement :
+- Java >= 8
 - Mysql database
 
-## local database set up :
+### local database set up :
+- Connect to mysql 
+- Execute sql script in /database.sql
 
+### Update mysql configuration
+- Open application.properties (/customer/src/main/resources/) 
+- Change spring.datasource.username and spring.datasource.password
+
+## Get started
+- Open /customer in your favorite IDE (STS/Eclipse/Inteliji)
+- Start as spring boot
+- Open swagger in browser http://localhost:8080/swagger-ui.html
 
 ## Project structure design :
 ![class diagram](https://github.com/meniman98/Retail_Banking/blob/customer/Customer/class_diagram_v1.png)

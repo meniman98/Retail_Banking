@@ -11,7 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableFeignClients("com.pod2.microservice.customer.service")
+@EnableFeignClients("com.pod2.microservice.customer")
 @EnableSwagger2
 public class CustomerApplication {
 

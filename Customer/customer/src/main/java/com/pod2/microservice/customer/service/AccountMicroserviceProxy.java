@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pod2.microservice.customer.model.AccountCreationStatus;
 import com.pod2.microservice.customer.model.AccountSummary;
 
-@FeignClient(name="account-microservice", url="localhost:8081/test")
+@FeignClient(name="${account.microservice.name}", url="${account.microservice.url}")
 public interface AccountMicroserviceProxy {
-	@PostMapping("/createAccount")
-	public AccountCreationStatus postCreateAccount(Long customerId);
+	@PostMapping("${account.microservice.create.path}")
+	public AccountCreationStatus postCreateAccount(@PathVariable Long customerId);
 	
-	@GetMapping("/getCustomerAccounts")
-	public List<AccountSummary> getCustomerAccounts(Long customerId);
+	@GetMapping("${account.microservice.getDetails.path}")
+	public List<AccountSummary> getCustomerAccounts(@PathVariable Long customerId);
 }

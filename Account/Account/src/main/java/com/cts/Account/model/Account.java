@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -16,11 +17,26 @@ public class Account {
     private LocalDate dateOfCreation;
     private String accountType;
     private double balance;
-    private Customer customer;
+
+
+    private long customerId;
 
     /*Creating a constructor for customerId only
     * in order to ensure that a value is passed in*/
     public Account(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return accountId == account.accountId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId);
     }
 }

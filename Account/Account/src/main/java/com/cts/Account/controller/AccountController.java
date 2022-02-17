@@ -4,18 +4,21 @@ package com.cts.Account.controller;
 import com.cts.Account.Utils;
 import com.cts.Account.model.Account;
 import com.cts.Account.model.AccountCreationStatus;
+import com.cts.Account.model.Customer;
 import com.cts.Account.repo.AccountRepo;
 import com.cts.Account.repo.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Set;
 
 @RestController
 public class AccountController {
-
-
 
 
     @Autowired
@@ -25,24 +28,35 @@ public class AccountController {
     CustomerRepo customerRepo;
 
     @PostMapping(Utils.CREATE_ACCOUNT)
-    public AccountCreationStatus createAccount(@PathVariable Long id) throws Exception {
-        if (customerRepo.existsById(id)) {
+    public AccountCreationStatus createAccount(@PathVariable Long customerId) {
+        if (customerRepo.existsById(customerId)) {
 //            Make a new account, and pass in the customer ID
 //            as a parameter
-            Account newAccount = new Account(customerRepo.getById(id));
+            Customer retrievedCustomer = customerRepo.getById(customerId);
+            Account newAccount = new Account(retrievedCustomer);
+            retrievedCustomer.getAccountSet().add(newAccount);
             accountRepo.save(newAccount);
             return new AccountCreationStatus
                     (newAccount, "Account successfully created");
         }
 //        if customerId does not exist
-        else if (!customerRepo.existsById(id)) {
-            return new AccountCreationStatus
-                    (null, "Customer ID does not exist");
-        }
-        else {
-//            TODO: make dedicated Exception classes
-            throw new Exception();
+        else if (!customerRepo.existsById(customerId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer ID not found");
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping(Utils.GET_CUSTOMER_ACCOUNTS)
+    public Set<Account> getCustomerAccounts(@PathVariable Long customerId) {
+        if (customerRepo.existsById(customerId)) {
+            Customer customer = customerRepo.getById(customerId);
+            return customer.getAccountSet();
+        } else if (!customerRepo.existsById(customerId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.CUSTOMER_NOT_FOUND);
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

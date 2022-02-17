@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,4 +17,7 @@ public class Customer {
     private String name;
     private LocalDate localDate;
     private String address;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Account> accountSet;
 }

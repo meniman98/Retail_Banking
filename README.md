@@ -1,3 +1,3 @@
-# Retail_Banking
-Microservices app for a retail bank
+# Retail banking system
+Team : POD 2
 

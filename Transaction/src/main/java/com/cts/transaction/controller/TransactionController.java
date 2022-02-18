@@ -18,22 +18,22 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping(value = "/deposit/{accountID}")
-    public TransactionStatus deposit(@PathVariable int accountID, double amount) {
+    public TransactionStatus deposit(@PathVariable Long accountID, double amount) {
         return transactionService.deposit(accountID, amount);
     }
 
     @PostMapping(value = "/withdraw/{accountID}")
-    public TransactionStatus withdraw(@PathVariable int accountID, double amount) {
+    public TransactionStatus withdraw(@PathVariable Long accountID, double amount) {
         return transactionService.withdraw(accountID, amount);
     }
 
     @PostMapping(value = "/transfer/{accountID}")
-    public TransactionStatus transfer(@PathVariable int sourceAccountID, int destAccountID, double amount) {
+    public TransactionStatus transfer(@PathVariable Long sourceAccountID, Long destAccountID, double amount) {
         return transactionService.transfer(sourceAccountID, destAccountID, amount);
     }
 
     @GetMapping(value = "/getTransaction/{customerID}")
-    public List<Transaction> getTransaction(@PathVariable int customerID) {
+    public List<Transaction> getTransaction(@PathVariable Long customerID) {
         return transactionService.getTransaction(customerID);
     }
 }

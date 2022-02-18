@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Service
@@ -29,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
 //            as a parameter
             Customer retrievedCustomer = customerRepo.getById(customerId);
             Account newAccount = new Account(retrievedCustomer.getCustomerId());
+            newAccount.setDateOfCreation(LocalDate.now());
             retrievedCustomer.getAccountSet().add(newAccount);
             accountRepo.save(newAccount);
             return new AccountCreationStatus

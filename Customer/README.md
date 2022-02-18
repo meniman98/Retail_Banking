@@ -24,16 +24,23 @@
 | Write unit test (with Mockito) and code for customer service class implementation | ✅ | 15/02 - 16/02 |
 | Write unit test (with Mockito and MockMvc) and code for customer restController class | ✅ | 16/02 |
 | Add swagger 2 | ✅ | 16/02 |
-| Add logging using sl4j and zipkin | ✅ | 16/02 |
+| Add logging using slf4j and zipkin | ✅ | 16/02 |
 | Add H2 support | ✅ | 17/02 |
-| Dockerize the microservice | 🚧 | 17/02 |
-| Integration test with Account Microservice | 🚧 | NA |
+| Update AccountMicroserviceProxy class to interact with Account Microservice | ✅ | 17/02 |
+| Integration test with Account Microservice | ✅ | 17/02 |
+| Dockerize the microservice | ✅ | 17/02 |
 | Add security layer using JWT | 🚧 | NA |
+| PMD check | 🚧 | 17/02 |
+| Refactor code | 🚧 | NA |
+| Deploy on AWS ECS Fargate | 🚧 | NA |
+| Set up CI/CD using Jenkins | 🚧 | NA |
+
 
 ## Installation guide :
 ### Requirement :
 - Java >= 8
-- Mysql database
+- Mysql database (optional)
+- Docker (optional)
 
 ### local database set up :
 - Connect to mysql 
@@ -49,9 +56,18 @@ If you prefer using In memory database follow this step
 - Uncomment H2 config properties
 - Comment MySQL config properties 
 
-## Get started
+## Get started using IDE
 - Open /customer in your favorite IDE (STS/Eclipse/Inteliji)
 - Start as spring boot
+- Open swagger in browser http://localhost:8080/swagger-ui.html
+
+## Get started using Docker
+- Build the project :
+  - Open command line inside /customer
+  - Execute `./mvnw install`
+- Build and Run docker image
+  - Execute `docker build -t customer-microservice:latest .`
+  - Execute `docker run -p 8080:8080 customer-microservice`
 - Open swagger in browser http://localhost:8080/swagger-ui.html
 
 ## Project structure design :

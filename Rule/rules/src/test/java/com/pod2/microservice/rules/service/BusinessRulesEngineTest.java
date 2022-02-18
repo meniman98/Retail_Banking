@@ -10,6 +10,7 @@ public class BusinessRulesEngineTest {
 	
 	public String ACCEPTED_STATUS = "allowed";
 	public String REJECTED_STATUS = "denied";
+	private float chargesFix = 10f;
 	
 	private BusinessRulesEngineImpl businessRulesEngine = new BusinessRulesEngineImpl();
 
@@ -43,5 +44,10 @@ public class BusinessRulesEngineTest {
 		assertEquals(ACCEPTED_STATUS, ruleStatus.getStatus());
 		ruleStatus = this.businessRulesEngine.evaluate(100.0, "current");
 		assertEquals(ACCEPTED_STATUS, ruleStatus.getStatus());
+	}
+	
+	@Test
+	public void testGetServiceChargesShouldReturnFixAmount() {
+		assertEquals(this.chargesFix, this.businessRulesEngine.getServiceCharges());
 	}
 }

@@ -4,14 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.pod2.microservice.rules.model.RuleStatus;
 
+@Service
 public class BusinessRulesEngineImpl implements BusinessRulesEngine {
 	@Value("${rules.status.accepted:allowed}")
 	public String ACCEPTED_STATUS = "allowed";
 	@Value("${rules.status.rejected:denied}")
 	public String REJECTED_STATUS = "denied";
+	@Value("${rules.charges.fix}")
+	public float chargesFix = 10f;
 	
 	private Map<String, Double> minBalanceAccountTypeMap;
 
@@ -34,8 +38,7 @@ public class BusinessRulesEngineImpl implements BusinessRulesEngine {
 
 	@Override
 	public float getServiceCharges() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.chargesFix;
 	}
 
 }

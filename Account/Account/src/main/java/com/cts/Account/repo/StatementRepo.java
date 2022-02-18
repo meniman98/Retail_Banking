@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface StatementRepo extends JpaRepository<Statement, Long> {
 
-    @Query("select * from statement " +
-            "where date between ?1 and ?2;")
-    Statement findStatementByDate(String startDate, String endDate);
+//    FIXME: create this query correctly. it throws an exception
+//    @Query("select * from statement " +
+//            "where date between ?1 and ?2")
+//    Statement findStatementByDate(String startDate, String endDate);
 
 }

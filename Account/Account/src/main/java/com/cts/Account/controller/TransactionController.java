@@ -15,11 +15,13 @@ public class TransactionController {
     @Autowired
     TransactionServiceImpl transactionService;
 
+//    Tested, works great
     @PostMapping(Utils.DEPOSIT)
     public TransactionStatus deposit(@PathVariable Long accountId, @PathVariable double amount) {
         return transactionService.deposit(accountId, amount);
     }
 
+//    Tested, works great
     @PostMapping(Utils.WITHDRAW)
     public TransactionStatus withdraw(@PathVariable Long accountId, @PathVariable double amount) {
         return transactionService.withdraw(accountId, amount);

@@ -4,18 +4,12 @@ package com.cts.Account.controller;
 import com.cts.Account.Utils;
 import com.cts.Account.model.Account;
 import com.cts.Account.model.AccountCreationStatus;
-import com.cts.Account.model.Customer;
-import com.cts.Account.repo.AccountRepo;
-import com.cts.Account.repo.CustomerRepo;
-import com.cts.Account.repo.StatementRepo;
 import com.cts.Account.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 

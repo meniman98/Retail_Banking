@@ -1,5 +1,8 @@
 package com.cts.transaction.model;
 
+import lombok.Data;
+
+@Data
 public class RuleStatus {
     private String status;
 

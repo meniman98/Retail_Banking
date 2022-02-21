@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<title>Employee dashboard - Retail Banking System</title>
+	<link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="webjars/bootstrap-icons/1.8.0/font/bootstrap-icons.css" rel="stylesheet" />
+	<!-- Custom styles -->
+	<link href="css/employee.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Retail Banking System - Employee Back Office</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="navbar-nav">
+			<div class="nav-item text-nowrap">
+				<a class="nav-link px-3" href="#">Sign out</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+				<div class="position-sticky pt-3">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link" href="/employee">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+									class="bi bi-house-door" viewBox="0 0 16 16">
+									<path
+										d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+								</svg>
+								Dashboard
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/customers">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+									class="bi bi-people" viewBox="0 0 16 16">
+									<path
+										d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+								</svg>
+								Customers
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/getCustomer">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+									class="bi bi-person-rolodex" viewBox="0 0 16 16">
+									<path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+									<path
+										d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1H1Zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1V2Z" />
+								</svg>
+								Customer details
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+									class="bi bi-person-plus" viewBox="0 0 16 16">
+									<path
+										d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+									<path fill-rule="evenodd"
+										d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+								</svg>
+								Create customer
+							</a>
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+
+			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Create new customer</h1>
+				</div>
+				<section class="container-fluid">
+					<form class="needs-validation" novalidate>
+						<div class="row g-3">
+							<div class="col-sm-6">
+								<label for="firstName" class="form-label">First name</label>
+								<input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+								<div class="invalid-feedback">
+									Valid first name is required.
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<label for="lastName" class="form-label">Last name</label>
+								<input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+								<div class="invalid-feedback">
+									Valid last name is required.
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="username" class="form-label">Date of birth</label>
+								<div class="input-group has-validation">
+									<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+											height="16" fill="currentColor" class="bi bi-calendar-event"
+											viewBox="0 0 16 16">
+											<path
+												d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+											<path
+												d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+										</svg></span>
+									<input type="text" class="form-control" id="username" placeholder="DD/MM/YYYY"
+										required>
+									<div class="invalid-feedback">
+										Date of birth is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="email" class="form-label">Email </label>
+								<input type="email" class="form-control" id="email" placeholder="customer@example.com">
+								<div class="invalid-feedback">
+									Please enter a valid email address for shipping updates.
+								</div>
+							</div>
+							
+							<div class="col-12">
+								<label for="password" class="form-label">Password <span
+										class="text-muted">(Temporary)</span></label>
+								<input type="text" class="form-control" id="password" placeholder="Customer account password...">
+								<div class="invalid-feedback">
+									Please enter a valid password.
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="email" class="form-label">Phone number </label>
+								<input type="tel" class="form-control" id="tel" placeholder="0123456789">
+								<div class="invalid-feedback">
+									Please enter a valid phone number.
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="address" class="form-label">Address</label>
+								<input type="text" class="form-control" id="address" placeholder="1234 Main St"
+									required>
+								<div class="invalid-feedback">
+									Please enter your shipping address.
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="address2" class="form-label">Address 2 <span
+										class="text-muted">(Optional)</span></label>
+								<input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+							</div>
+
+							<div class="col-md-5">
+								<label for="country" class="form-label">Country</label>
+								<input type="text" class="form-control" id="country" placeholder="" required>
+								<div class="invalid-feedback">
+									Please select a valid country.
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<label for="state" class="form-label">State</label>
+								<input type="text" class="form-control" id="state" placeholder="" required>
+								<div class="invalid-feedback">
+									Please provide a valid state.
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<label for="zip" class="form-label">Zip</label>
+								<input type="text" class="form-control" id="zip" placeholder="" required>
+								<div class="invalid-feedback">
+									Zip code required.
+								</div>
+							</div>
+						</div>
+						<hr class="my-4">
+						<button class="btn btn-primary btn-lg" type="submit">Add customer <svg
+								xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+								class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+								<path
+									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+							</svg></button>
+					</form>
+				</section>
+			</main>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+
+</html>

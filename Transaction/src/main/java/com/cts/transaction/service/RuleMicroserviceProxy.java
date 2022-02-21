@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface RuleMicroserviceProxy {
 
     @GetMapping("${url.evaluate.rules}")
-    public RuleStatus evaluateMinBal(@RequestParam double balance, @RequestParam String accountType);
+    RuleStatus evaluateMinBal(@RequestParam double balance, @RequestParam String accountType);
 
     @GetMapping("${url.charges.rules}")
-    public Float getServiceCharges();
+    Float getServiceCharges();
 }

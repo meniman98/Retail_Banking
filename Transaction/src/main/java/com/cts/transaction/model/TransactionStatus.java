@@ -1,6 +1,10 @@
 package com.cts.transaction.model;
 
+import lombok.Data;
+
+@Data
 public class TransactionStatus {
+    private long id;
     private long accountId;
     private String message;
     private double sourceBalance;

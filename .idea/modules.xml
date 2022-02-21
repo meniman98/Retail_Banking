@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Customer (1)/Customer/Customer.iml" filepath="$PROJECT_DIR$/Customer (1)/Customer/Customer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Retail_Banking_Server/Retail_Banking.iml" filepath="$PROJECT_DIR$/Retail_Banking_Server/Retail_Banking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Transaction/transaction.iml" filepath="$PROJECT_DIR$/Transaction/transaction.iml" />
     </modules>
   </component>
 </project>

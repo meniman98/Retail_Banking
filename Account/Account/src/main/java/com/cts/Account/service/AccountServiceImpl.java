@@ -24,17 +24,29 @@ public class AccountServiceImpl implements AccountService {
     AccountRepo accountRepo;
 
     @Override
-    public AccountCreationStatus createAccount(Long customerId) {
+    public AccountCreationStatus createAccount(Long customerId, Account account) {
         if (customerRepo.existsById(customerId)) {
 //            Make a new account, and pass in the customer ID
 //            as a parameter
             Customer retrievedCustomer = customerRepo.getById(customerId);
-            Account newAccount = new Account(retrievedCustomer.getCustomerId());
-            newAccount.setDateOfCreation(LocalDate.now());
-            retrievedCustomer.getAccountSet().add(newAccount);
-            accountRepo.save(newAccount);
+
+            account.setCustomerId(retrievedCustomer.getCustomerId());
+            account.setDateOfCreation(LocalDate.now());
+
+//            Add a savings account
+            account.setAccountType("Savings");
+            retrievedCustomer.getAccountSet().add(account);
+            accountRepo.save(account);
+
+//            Add a current account
+//            FIXME add two accounts at the same time
+            account.setAccountType("Current");
+            retrievedCustomer.getAccountSet().add(account);
+            accountRepo.save(account);
+
+
             return new AccountCreationStatus
-                    (newAccount, "Account successfully created");
+                    (account, "Account successfully created");
         }
 //        if customerId does not exist
         else if (!customerRepo.existsById(customerId)) {

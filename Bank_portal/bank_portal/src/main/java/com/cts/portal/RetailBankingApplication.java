@@ -1,4 +1,4 @@
-package com.cts.Retail_Banking;
+package com.cts.portal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

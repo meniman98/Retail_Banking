@@ -17,19 +17,24 @@
   - POD 2 team
 
 ## Development progress
-| Task | Status | Date |
-|---------|--------|------|
-| Set up project structure | ✅ | 15/02 |
-| Set up local MysQL Database  | 🚧 | 15/02 |
-| Test App and Mysql database connection | 🚧 | 15/02 |
-| Create entities | 🚧 | 15/02 |
-| Integration test with Account Microservice | 🚧 | 17/02 |
-| Dockerize the microservice | 🚧 | 17/02 |
-| Add security layer using JWT | 🚧 | NA |
-| PMD check | 🚧 | 17/02 |
-| Refactor code | 🚧 | NA |
-| Deploy on AWS ECS Fargate | 🚧 | NA |
-| Set up CI/CD using Jenkins | 🚧 | NA |
+| Task | Status | Date | Author |
+|------|--------|------|--------|
+| Enable Eureka Server | ✅ | 15/02 | Ahmed ABDULRAHMAN |
+| Add bootstrap v5 to style pages | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Add login page | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Add employee dashboard | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Add view create customer form | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Add view customer details and accounts summary | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Add view list customers | ✅ | 21/02 | Solofo RABONARIJAONA |
+| Set up local MysQL Database  | 🚧 | 25/02 | NA |
+| Test App and Mysql database connection | 🚧 | 25/02 | NA 
+| Integration test with Account Microservice | 🚧 | 25/02 | NA |
+| Dockerize the microservice | 🚧 | 25/02 | NA |
+| Add security layer using JWT | 🚧 | 25/02 | NA |
+| PMD check | 🚧 | 25/02 | NA | NA |
+| Refactor code | 🚧 | 25/02 | NA |
+| Deploy on AWS ECS Fargate | 🚧 | 25/02 | NA |
+| Set up CI/CD using Jenkins | 🚧 | 25/02 | NA |
 
 
 ## Installation guide :

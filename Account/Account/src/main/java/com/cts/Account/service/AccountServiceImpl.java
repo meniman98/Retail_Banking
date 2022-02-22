@@ -39,12 +39,15 @@ public class AccountServiceImpl implements AccountService {
 //            Add a savings account
             /*FIXME: the creation of 2 accounts works fine in the DB, but only the
             *  "current" account gets added to the accountSet of the Customer*/
-            retrievedCustomer.getAccountSet().add(savingsAccount);
+
             accountRepo.save(savingsAccount);
+            retrievedCustomer.getAccountSet().add(savingsAccount);
+
 
 //            Add a current account
-            retrievedCustomer.getAccountSet().add(currentAccount);
             accountRepo.save(currentAccount);
+            retrievedCustomer.getAccountSet().add(currentAccount);
+
 
 
             return new AccountCreationStatus

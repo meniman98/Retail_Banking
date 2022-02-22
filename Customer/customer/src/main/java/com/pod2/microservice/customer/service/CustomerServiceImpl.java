@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
 				AccountCreationStatus accountCreationStatus = accountMicroserviceProxy
 						.postCreateAccount(newCustomer.getCustomerId());
 				if (null != accountCreationStatus && !accountCreationStatus.getMessage().isEmpty()) {
-					accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE);
+					accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS);
 					this.log.info("Successfully created default Accounts for new Customer with ID = " + newCustomer.getCustomerId());
 				}
 			} catch (Exception e) {

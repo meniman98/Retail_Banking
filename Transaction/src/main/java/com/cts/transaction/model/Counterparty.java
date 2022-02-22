@@ -1,7 +1,10 @@
 package com.cts.transaction.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "counterparties")
 public class Counterparty {
@@ -15,6 +18,7 @@ public class Counterparty {
     private String name;
 
     public Counterparty() {
+        super();
     }
 
     public Counterparty(int counterparty_ID, String name) {

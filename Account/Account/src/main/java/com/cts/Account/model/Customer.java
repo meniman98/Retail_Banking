@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -20,4 +21,17 @@ public class Customer {
 
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Account> accountSet;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return customerId == customer.customerId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId);
+    }
 }

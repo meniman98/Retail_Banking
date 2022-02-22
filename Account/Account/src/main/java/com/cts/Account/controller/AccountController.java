@@ -1,17 +1,18 @@
 package com.cts.Account.controller;
 
 
-import com.cts.Account.Utils;
-import com.cts.Account.model.Account;
-import com.cts.Account.model.AccountCreationStatus;
-import com.cts.Account.service.AccountServiceImpl;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import com.cts.Account.Utils;
+import com.cts.Account.model.Account;
+import com.cts.Account.model.AccountCreationStatus;
+import com.cts.Account.service.AccountServiceImpl;
 
 @RestController
 public class AccountController {
@@ -27,7 +28,7 @@ public class AccountController {
 
     //    this method works great
     @GetMapping(Utils.GET_CUSTOMER_ACCOUNTS)
-    public Set<Account> getCustomerAccounts(@PathVariable Long customerId) {
+    public List<Account> getCustomerAccounts(@PathVariable Long customerId) {
         return accountService.getCustomerAccounts(customerId);
     }
 

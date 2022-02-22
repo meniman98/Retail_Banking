@@ -1,8 +1,11 @@
 package com.cts.transaction.model;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -13,7 +16,7 @@ public class Transaction {
     private int transactionID;
 
     @Column(name = "accountID")
-    private int accountID;
+    private Long accountID;
 
     @Column(name = "statementID")
     private int statementID;
@@ -22,26 +25,31 @@ public class Transaction {
     @JoinColumn(name = "counterpartyID", referencedColumnName = "id")
     private Counterparty counterParty;
 
-    @Column(name = "transactionDate")
-    private Date transactionDate;
+    @Column(name = "transactionDate", columnDefinition = "DATE")
+    private LocalDate transactionDate;
 
     @Column(name = "transactionType")
     private String transactionType;
+  
+    @Column(name = "transactionStatus")
+    private String transactionStatus;
 
     @Column(name = "amount")
-    private double amount;
+    private String amount;
 
     public Transaction() {
+        super();
     }
 
-    public Transaction(int transactionID, int accountID, int statementID, Counterparty counterParty,
-                       Date transactionDate, String transactionType, double amount) {
+    public Transaction(int transactionID, Long accountID, int statementID, Counterparty counterParty,
+                       LocalDate transactionDate, String transactionType, String transactionStatus, String amount) {
         this.transactionID = transactionID;
         this.accountID = accountID;
         this.statementID = statementID;
         this.counterParty = counterParty;
         this.transactionDate = transactionDate;
         this.transactionType = transactionType;
+        this.transactionStatus = transactionStatus;
         this.amount = amount;
     }
 
@@ -53,11 +61,11 @@ public class Transaction {
         this.transactionID = transactionID;
     }
 
-    public int getAccountID() {
+    public Long getAccountID() {
         return accountID;
     }
 
-    public void setAccountID(int accountID) {
+    public void setAccountID(Long accountID) {
         this.accountID = accountID;
     }
 
@@ -77,11 +85,11 @@ public class Transaction {
         this.counterParty = counterParty;
     }
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -93,11 +101,19 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(String transactionStatus) {
+        this.transactionStatus = transactionStatus;
     }
 }

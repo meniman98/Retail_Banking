@@ -24,29 +24,31 @@ public class AccountServiceImpl implements AccountService {
     AccountRepo accountRepo;
 
     @Override
-    public AccountCreationStatus createAccount(Long customerId, Account account) {
+    public AccountCreationStatus createAccount(Long customerId, Account baseAccount) {
         if (customerRepo.existsById(customerId)) {
 //            Make a new account, and pass in the customer ID
 //            as a parameter
             Customer retrievedCustomer = customerRepo.getById(customerId);
 
-            account.setCustomerId(retrievedCustomer.getCustomerId());
-            account.setDateOfCreation(LocalDate.now());
+            baseAccount.setCustomerId(retrievedCustomer.getCustomerId());
+
+            Account savingsAccount = createAccount(baseAccount, "Savings");
+
+            Account currentAccount = createAccount(baseAccount, "Current");
 
 //            Add a savings account
-            account.setAccountType("Savings");
-            retrievedCustomer.getAccountSet().add(account);
-            accountRepo.save(account);
+            /*FIXME: the creation of 2 accounts works fine in the DB, but only the
+            *  "current" account gets added to the accountSet of the Customer*/
+            retrievedCustomer.getAccountSet().add(savingsAccount);
+            accountRepo.save(savingsAccount);
 
 //            Add a current account
-//            FIXME add two accounts at the same time
-            account.setAccountType("Current");
-            retrievedCustomer.getAccountSet().add(account);
-            accountRepo.save(account);
+            retrievedCustomer.getAccountSet().add(currentAccount);
+            accountRepo.save(currentAccount);
 
 
             return new AccountCreationStatus
-                    (account, "Account successfully created");
+                    (baseAccount, "Account successfully created");
         }
 //        if customerId does not exist
         else if (!customerRepo.existsById(customerId)) {
@@ -55,6 +57,8 @@ public class AccountServiceImpl implements AccountService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @Override
     public Set<Account> getCustomerAccounts(Long customerId) {
@@ -80,4 +84,15 @@ public class AccountServiceImpl implements AccountService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    private Account createAccount(Account baseAccount, String accountType) {
+        return new Account(
+                accountType,
+                baseAccount.getAccountNo(),
+                baseAccount.getBalance(),
+                baseAccount.getCustomerId(),
+                LocalDate.now()
+        );
+    }
+
 }

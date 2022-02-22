@@ -27,6 +27,15 @@ public class Account {
 
     /*Creating a constructor for customerId only
     * in order to ensure that a value is passed in*/
+
+    public Account(String accountType, String accountNo, double balance, long customerId, LocalDate dateOfCreation) {
+        this.accountType = accountType;
+        this.accountNo = accountNo;
+        this.balance = balance;
+        this.customerId = customerId;
+        this.dateOfCreation = dateOfCreation;
+    }
+
     public Account(long customer) {
         this.customerId = customer;
     }

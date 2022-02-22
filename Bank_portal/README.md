@@ -28,7 +28,7 @@
 | Add view list customers | ✅ | 21/02 | Solofo RABONARIJAONA |
 | Add server side validation to create customer form inputs | ✅ | 21/02 | Solofo RABONARIJAONA |
 | Add controller and service to create new customer | ✅ | 22/02 | Solofo RABONARIJAONA |
-| Add security and User details | ✅ | Solofo RABONARIJAONA |
+| Add security and User details | ✅ | 22/02 | Solofo RABONARIJAONA |
 | Set up local MysQL Database  | 🚧 | 25/02 | NA |
 | Test App and Mysql database connection | 🚧 | 25/02 | NA 
 | Integration test with Account Microservice | 🚧 | 25/02 | NA |

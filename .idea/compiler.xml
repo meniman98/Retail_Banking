@@ -10,10 +10,12 @@
         <module name="Retail_Banking" />
         <module name="Customer" />
         <module name="transaction" />
+        <module name="customer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Customer" target="11" />
+      <module name="customer" target="1.8" />
       <module name="Retail_Banking" target="11" />
       <module name="transaction" target="11" />
     </bytecodeTargetLevel>
@@ -22,6 +24,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Customer" options="-parameters" />
       <module name="Retail_Banking" options="-parameters" />
+      <module name="customer" options="-parameters" />
       <module name="transaction" options="-parameters" />
     </option>
   </component>

@@ -52,6 +52,7 @@ public class TransactionServiceTest {
     @Test
     public void testValidDeposit(){
         TransactionStatus transactionStatus = transactionServiceImp.deposit(1L, 100.0);
+        System.out.println(transactionStatus.getMessage());
         assertNotNull(transactionStatus);
     }
 }

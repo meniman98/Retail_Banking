@@ -84,7 +84,8 @@ public class TransactionServiceImp implements TransactionService {
         try {
             // get account info
             AccountSummary accountData = accountMicroserviceProxy.getAccount(sourceAccountID);
-            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId());
+            AccountSummary accountDataDest = accountMicroserviceProxy.getAccount(destAccountID);
+            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountDataDest.getCustomerId());
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterTransfer = accountData.getBalance() - amount;
             RuleStatus ruleStatus = ruleMicroserviceProxy.evaluateMinBal(balanceAfterTransfer,

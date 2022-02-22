@@ -24,17 +24,34 @@ public class AccountServiceImpl implements AccountService {
     AccountRepo accountRepo;
 
     @Override
-    public AccountCreationStatus createAccount(Long customerId) {
+    public AccountCreationStatus createAccount(Long customerId, Account baseAccount) {
         if (customerRepo.existsById(customerId)) {
 //            Make a new account, and pass in the customer ID
 //            as a parameter
             Customer retrievedCustomer = customerRepo.getById(customerId);
-            Account newAccount = new Account(retrievedCustomer.getCustomerId());
-            newAccount.setDateOfCreation(LocalDate.now());
-            retrievedCustomer.getAccountSet().add(newAccount);
-            accountRepo.save(newAccount);
+
+            baseAccount.setCustomerId(retrievedCustomer.getCustomerId());
+
+            Account savingsAccount = createAccount(baseAccount, "Savings");
+
+            Account currentAccount = createAccount(baseAccount, "Current");
+
+//            Add a savings account
+            /*FIXME: the creation of 2 accounts works fine in the DB, but only the
+            *  "current" account gets added to the accountSet of the Customer*/
+
+            accountRepo.save(savingsAccount);
+            retrievedCustomer.getAccountSet().add(savingsAccount);
+
+
+//            Add a current account
+            accountRepo.save(currentAccount);
+            retrievedCustomer.getAccountSet().add(currentAccount);
+
+
+
             return new AccountCreationStatus
-                    (newAccount, "Account successfully created");
+                    (baseAccount, "Account successfully created");
         }
 //        if customerId does not exist
         else if (!customerRepo.existsById(customerId)) {
@@ -43,6 +60,8 @@ public class AccountServiceImpl implements AccountService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @Override
     public Set<Account> getCustomerAccounts(Long customerId) {
@@ -68,4 +87,15 @@ public class AccountServiceImpl implements AccountService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    private Account createAccount(Account baseAccount, String accountType) {
+        return new Account(
+                accountType,
+                baseAccount.getAccountNo(),
+                baseAccount.getBalance(),
+                baseAccount.getCustomerId(),
+                LocalDate.now()
+        );
+    }
+
 }

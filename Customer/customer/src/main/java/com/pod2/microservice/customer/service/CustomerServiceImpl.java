@@ -45,19 +45,18 @@ public class CustomerServiceImpl implements CustomerService {
 			newCustomer.getCustomerCreationStatus().add(status);
 			// interact with Account service to create Savings & Current Account for
 			// the customer
-			CustomerCreationStatus accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE);
 			try {
 				this.log.info("Interract with Account Microservice to request Accounts creation for new Customer with ID = " + newCustomer.getCustomerId());
 				AccountCreationStatus accountCreationStatus = accountMicroserviceProxy
 						.postCreateAccount(newCustomer.getCustomerId());
 				if (null != accountCreationStatus && !accountCreationStatus.getMessage().isEmpty()) {
-					accountStatus = new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS);
+					newCustomer.getCustomerCreationStatus().add(new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS));
 					this.log.info("Successfully created default Accounts for new Customer with ID = " + newCustomer.getCustomerId());
 				}
 			} catch (Exception e) {
+				newCustomer.getCustomerCreationStatus().add(new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE));
 				this.log.error("Failed to interract with Account Service and create default accounts for new customer with ID = " + newCustomer.getCustomerId());
 			}
-			newCustomer.getCustomerCreationStatus().add(accountStatus);
 			// update new customer status
 			customerRepository.save(newCustomer);
 		} else {

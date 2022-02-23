@@ -1,18 +1,33 @@
 package com.cts.portal.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cts.portal.dto.Customer;
 import com.cts.portal.dto.CustomerCreationStatus;
+import com.cts.portal.model.Authority;
+import com.cts.portal.model.BankUser;
+import com.cts.portal.repository.AuthorityRepository;
+import com.cts.portal.repository.BankUserRepository;
 
 @Service
 public class CustomerService {
 	
 	@Autowired
 	CustomerMicroserviceProxy customerProxy;
+	
+	@Autowired
+	BankUserRepository userRepo;
+	
+	@Autowired
+	AuthorityRepository authorityRepo;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public List<Customer> getCustomers() {
 		try {
@@ -33,8 +48,18 @@ public class CustomerService {
 	public CustomerCreationStatus createCustomer(Customer customer) {
 		Customer newCustomer = this.buildCustomer(customer);
 		try {
-			return this.customerProxy.postCreateAccount(newCustomer);
+			CustomerCreationStatus status = this.customerProxy.postCreateAccount(newCustomer);
+			BankUser newCustomerUser = new BankUser();
+			newCustomerUser.setAuthorities(new HashSet<>());
+			newCustomerUser.setPassword(this.passwordEncoder.encode(customer.getPassword()));
+			newCustomerUser.setEmail(customer.getEmail());
+			newCustomerUser.setCustomerFirstName(customer.getFirstName());
+			Authority customerAuhority = authorityRepo.findByName("ROLE_CUSTOMER");
+			newCustomerUser.getAuthorities().add(customerAuhority);
+			this.userRepo.save(newCustomerUser);
+			return status;
 		} catch(Exception e) {
+			e.printStackTrace();
 			CustomerCreationStatus failedStatus = new CustomerCreationStatus();
 			failedStatus.setMessage("ko");
 			return failedStatus;

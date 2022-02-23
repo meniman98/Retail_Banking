@@ -23,5 +23,5 @@ public interface CustomerMicroserviceProxy {
 	public Customer getCustomerDetailsByFirstName(@RequestParam String firstName);
 	
 	@GetMapping("${customer.microservice.getallcustomer.path}")
-	public List<Customer> getAllCustomerDetailsByFirstName();
+	public List<Customer> getAllCustomerDetails();
 }

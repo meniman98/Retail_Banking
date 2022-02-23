@@ -1,5 +1,7 @@
 package com.cts.portal.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,14 @@ public class CustomerService {
 	
 	@Autowired
 	CustomerMicroserviceProxy customerProxy;
+	
+	public List<Customer> getCustomers() {
+		try {
+			return this.customerProxy.getAllCustomerDetails();
+		} catch(Exception e) {
+			return null;
+		}
+	}
 	
 	public Customer getCustomer(String firstName) {
 		try {

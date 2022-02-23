@@ -1,5 +1,4 @@
 package com.cts.transaction.model;
-
 import lombok.Data;
 
 import javax.persistence.*;
@@ -31,7 +30,7 @@ public class Transaction {
 
     @Column(name = "transactionType")
     private String transactionType;
-
+  
     @Column(name = "transactionStatus")
     private String transactionStatus;
 

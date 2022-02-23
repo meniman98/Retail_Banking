@@ -9,11 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Retail_Banking" />
         <module name="Customer" />
-        <module name="transaction" />
-        <module name="customer" />
+        <module name="Account" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Account" target="11" />
       <module name="Customer" target="11" />
       <module name="customer" target="1.8" />
       <module name="Retail_Banking" target="11" />
@@ -22,6 +22,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Account" options="-parameters" />
       <module name="Customer" options="-parameters" />
       <module name="Retail_Banking" options="-parameters" />
       <module name="customer" options="-parameters" />

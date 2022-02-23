@@ -6,7 +6,8 @@ public class Utils {
     public static final String CREATE_ACCOUNT = "/createAccount/{customerId}";
     public static final String GET_CUSTOMER_ACCOUNTS = "/getCustomerAccounts/{customerId}";
     public static final String GET_ACCOUNT = "/getAccount/{accountId}";
-    public static final String GET_ACCOUNT_STATEMENT = "/getAccountStatement/{accountId}";
+    public static final String GET_STATEMENT_LIST = "/getAccountStatement/{accountId}/{startDate}/{endDate}";
+    public static final String GET_SINGLE_STATEMENT = "/getAccountStatement/{accountId}";
     public static final String DEPOSIT = "/deposit/{accountId}/{amount}";
     public static final String WITHDRAW = "withdraw/{accountId}/{amount}";
 

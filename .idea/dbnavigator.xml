@@ -24,7 +24,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="89ab75a5-8fea-4af6-a9ed-8015c04416e8">
+        <schema name="account" object-types="table, view, procedure, function, column" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="89ab75a5-8fea-4af6-a9ed-8015c04416e8">
@@ -36,6 +40,13 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="89ab75a5-8fea-4af6-a9ed-8015c04416e8" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="89ab75a5-8fea-4af6-a9ed-8015c04416e8" dataset="account.statement" active-filter-id="5a988eb7-e80a-465e-ae4f-e745b7caf4fb">
+      <filter id="5a988eb7-e80a-465e-ae4f-e745b7caf4fb" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="statement_id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

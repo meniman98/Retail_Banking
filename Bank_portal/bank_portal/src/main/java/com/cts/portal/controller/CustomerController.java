@@ -57,7 +57,11 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/getCustomer")
-	public String getCustomerAction(@RequestParam(required = false) String firstName) {
+	public String getCustomerAction(ModelMap model, @RequestParam(required = false) String firstName) {
+		if (firstName != null) {
+			Customer customer = this.customerService.getCustomer(firstName);
+			model.addAttribute("customer", customer);
+		}
 		return "customer-details";
 	}
 	

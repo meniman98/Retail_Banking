@@ -12,6 +12,14 @@ public class CustomerService {
 	@Autowired
 	CustomerMicroserviceProxy customerProxy;
 	
+	public Customer getCustomer(String firstName) {
+		try {
+			return this.customerProxy.getCustomerDetailsByFirstName(firstName);
+		} catch(Exception e) {
+			return null;
+		}
+	}
+	
 	public CustomerCreationStatus createCustomer(Customer customer) {
 		Customer newCustomer = this.buildCustomer(customer);
 		try {

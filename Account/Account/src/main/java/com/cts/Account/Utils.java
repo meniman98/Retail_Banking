@@ -14,4 +14,5 @@ public class Utils {
 //    Exception messages
     public static final String ACCOUNT_NOT_FOUND = "Account ID not found";
     public static final String CUSTOMER_NOT_FOUND = "Customer ID not found";
+    public static final String STATEMENT_NOT_FOUND = "This Account ID does exist, but does not belong to any statement";
 }

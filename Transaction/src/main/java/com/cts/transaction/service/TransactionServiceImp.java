@@ -83,7 +83,8 @@ public class TransactionServiceImp implements TransactionService {
         try {
             // get account info
             AccountSummary accountData = accountMicroserviceProxy.getAccount(sourceAccountID);
-            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId());
+            AccountSummary accountDataDest = accountMicroserviceProxy.getAccount(destAccountID);
+            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountDataDest.getCustomerId());
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterTransfer = accountData.getBalance() - amount;
             RuleStatus ruleStatus = ruleMicroserviceProxy.evaluateMinBal(balanceAfterTransfer,
@@ -98,10 +99,12 @@ public class TransactionServiceImp implements TransactionService {
                 return declinedStatus;
             }
             // otherwise, proceed to withdrawal
-            TransactionStatus transactionStatus = accountMicroserviceProxy.transfer(sourceAccountID,
-                    destAccountID, amount);
+            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(sourceAccountID, amount);
             transactionStatus.setMessage("completed");
             transactionHistory(sourceAccountID, "-" + amount, customerData, "transfer",
+                    "completed");
+            accountMicroserviceProxy.deposit(destAccountID, amount);
+            transactionHistory(destAccountID, "+" + amount, customerData, "transfer",
                     "completed");
             return transactionStatus;
         } catch (Exception e) {
@@ -118,7 +121,7 @@ public class TransactionServiceImp implements TransactionService {
     public List<Transaction> getTransaction(Long customerID) {
         List<AccountSummary> accounts = accountMicroserviceProxy.getCustomerAccounts(customerID);
         List<Transaction> transactionList = new ArrayList<>();
-        for (AccountSummary accountData: accounts) {
+        for (AccountSummary accountData : accounts) {
             transactionList.addAll(transactionRepo.findByAccountID(accountData.getAccountId()));
         }
         return transactionList;

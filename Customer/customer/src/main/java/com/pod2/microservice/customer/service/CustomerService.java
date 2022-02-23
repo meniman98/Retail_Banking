@@ -1,6 +1,6 @@
 package com.pod2.microservice.customer.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
 
 import com.pod2.microservice.customer.model.Customer;
 import com.pod2.microservice.customer.model.CustomerCreationStatus;
@@ -13,4 +13,6 @@ public interface CustomerService {
 	
 	public CustomerCreationStatus create(Customer customer);
 	public Customer getDetailsById(Long customerId);
+	public Customer getDetailsByFirstName(String firstName);
+	public List<Customer> getAllCustomerDetails();
 }

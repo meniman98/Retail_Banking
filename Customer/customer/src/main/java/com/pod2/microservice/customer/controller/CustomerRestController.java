@@ -1,5 +1,7 @@
 package com.pod2.microservice.customer.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class CustomerRestController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@PostMapping("${url.create.customer}")
+	@PostMapping("${create.customer.url}")
 	public ResponseEntity<CustomerCreationStatus> createCustomer(@RequestBody Customer customer) {
 		CustomerCreationStatus status = this.customerService.create(customer);
 		if (null != status) {
@@ -33,15 +35,33 @@ public class CustomerRestController {
 		}
 	}
 	
-	@GetMapping("${url.details.customer}")
-	public @ResponseBody Customer getCustomerDetails(@RequestParam Long customerId, HttpServletResponse httpResponse) {
+	@GetMapping("${details.customer.url}")
+	public ResponseEntity<Customer> getCustomerDetails(@RequestParam Long customerId) {
 		Customer customer = this.customerService.getDetailsById(customerId);
 		if (null != customer) {
-			httpResponse.setStatus(HttpStatus.OK.value());
+			return ResponseEntity.ok(customer);
 		} else {
-			httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
+			return ResponseEntity.notFound().build();
 		}
-		
-		return customer;
+	}
+	
+	@GetMapping("${details.customer.byfirstname.url}")
+	public ResponseEntity<Customer> getCustomerDetails(@RequestParam String firstName) {
+		Customer customer = this.customerService.getDetailsByFirstName(firstName);
+		if (null != customer) {
+			return ResponseEntity.ok(customer);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("${details.all.customer.url}")
+	public ResponseEntity<List<Customer>> getAllCustomerDetails() {
+		List<Customer> customers = this.customerService.getAllCustomerDetails();
+		if (!customers.isEmpty()) {
+			return ResponseEntity.ok(customers);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

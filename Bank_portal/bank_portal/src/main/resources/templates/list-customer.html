@@ -119,11 +119,6 @@
 								<td th:text="${customer.dateOfBirth}" />
 								<td th:text="${customer.email}" />
 							</tr>
-							<tr th:if="${customers.size == 0}">
-								<td colspan="5">
-									<p class="alert alert-warning">No customer registered !</p>
-								</td>
-							</tr>
 						</tbody>
 
 					</table>

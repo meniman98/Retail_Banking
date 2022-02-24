@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 
-@FeignClient(name="${microservice.account.name}", url="${microservice.account.url}")
+@FeignClient(name="${microservice.account.name}")
 public interface AccountMicroserviceProxy {
 
     @PostMapping("${url.deposit.account}")

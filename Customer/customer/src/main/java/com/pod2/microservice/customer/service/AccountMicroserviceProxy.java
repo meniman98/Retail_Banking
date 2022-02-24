@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.pod2.microservice.customer.model.AccountCreationStatus;
 import com.pod2.microservice.customer.model.AccountSummary;
 
-@FeignClient(name="${account.microservice.name}", url="${account.microservice.url}")
+@FeignClient(name="${account.microservice.name}")
 public interface AccountMicroserviceProxy {
 	@PostMapping("${account.microservice.create.path}")
 	public AccountCreationStatus postCreateAccount(@PathVariable Long customerId);

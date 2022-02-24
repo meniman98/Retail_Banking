@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cts.portal.dto.Transaction;
 import com.cts.portal.dto.TransactionStatus;
 
-@FeignClient(name = "${transaction.microservice.name}", url = "${transaction.microservice.url}")
+@FeignClient(name = "${transaction.microservice.name}")
 public interface TransactionMicroserviceProxy {
 	@PostMapping(value = "/deposit/{accountID}")
 	public TransactionStatus deposit(@PathVariable Long accountID, @RequestParam double amount);

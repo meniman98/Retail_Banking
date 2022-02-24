@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cts.portal.dto.Customer;
 import com.cts.portal.dto.CustomerCreationStatus;
 
-@FeignClient(name="${customer.microservice.name}", url="${customer.microservice.url}")
+@FeignClient(name="${customer.microservice.name}")
 public interface CustomerMicroserviceProxy {
 	@PostMapping("${customer.microservice.create.path}")
 	public CustomerCreationStatus postCreateAccount(@RequestBody Customer customer);

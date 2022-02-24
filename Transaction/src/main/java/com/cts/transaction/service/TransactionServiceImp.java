@@ -106,10 +106,12 @@ public class TransactionServiceImp implements TransactionService {
                 return declinedStatus;
             }
             // otherwise, proceed to withdrawal
-            TransactionStatus transactionStatus = accountMicroserviceProxy.transfer(sourceAccountID,
-                    destAccountID, amount);
+            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(sourceAccountID, amount);
             transactionStatus.setMessage("completed");
             transactionHistory(sourceAccountID, "-" + amount, customerData, "transfer",
+                    "completed");
+            accountMicroserviceProxy.deposit(destAccountID, amount);
+            transactionHistory(destAccountID, "+" + amount, customerData, "transfer",
                     "completed");
             return transactionStatus;
         } catch (Exception e) {

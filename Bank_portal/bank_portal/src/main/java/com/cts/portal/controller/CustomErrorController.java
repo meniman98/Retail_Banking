@@ -25,7 +25,7 @@ public class CustomErrorController implements ErrorController {
 	            return "error/error-forbidden";
 	        }
 	    }
-	    return "error";
+	    return "error/error";
 	}
 
 }

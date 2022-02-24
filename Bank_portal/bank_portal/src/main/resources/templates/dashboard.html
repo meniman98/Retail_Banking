@@ -142,7 +142,7 @@
 									<div>
 										<h6 class="my-0">Account Number</h6>
 									</div>
-									<span class="text-muted" th:text="${account.accountNo}" />
+									<strong class="text-muted fs-6" th:text="${account.accountNo}" />
 								</li>
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
@@ -151,16 +151,16 @@
 									<span class="text-muted" th:text="${account.dateOfCreation}" />
 								</li>
 									<li class="list-group-item d-flex justify-content-between">
-									<div class="text-info">
+									<div>
 										<h6 class="my-0">Minimum balance</h6>
 									</div>
-									<span class="text-info" th:text="${(account.accountType == 'Savings') ? '0.0 $' : '-50.0 $'}" />
+									<span class="text-warning" th:text="${(account.accountType == 'Savings') ? '0.0 $' : '-50.0 $'}" />
 								</li>
 								<li class="list-group-item d-flex justify-content-between">
 									<div class="text-success">
 										<h6 class="my-0"><strong>Balance</strong></h6>
 									</div>
-									<strong class="text-success" th:text="${account.balance + ' $'}" />
+									<strong class="text-success fs-6" th:text="${account.balance + ' $'}" />
 								</li>
 
 							</ul>

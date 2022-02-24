@@ -37,6 +37,10 @@ public class CustomerService {
 		}
 	}
 	
+	public BankUser getUser(String email) {
+		return this.userRepo.findByEmail(email);
+	}
+	
 	public Customer getCustomer(String firstName) {
 		try {
 			return this.customerProxy.getCustomerDetailsByFirstName(firstName);

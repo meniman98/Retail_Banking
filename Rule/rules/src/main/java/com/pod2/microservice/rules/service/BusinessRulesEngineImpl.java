@@ -25,8 +25,8 @@ public class BusinessRulesEngineImpl implements BusinessRulesEngine {
 
 	public BusinessRulesEngineImpl() {
 		this.minBalanceAccountTypeMap = new HashMap<>();
-		this.minBalanceAccountTypeMap.put("savings", 0.0);
-		this.minBalanceAccountTypeMap.put("current", -50.0);
+		this.minBalanceAccountTypeMap.put("Savings", 0.0);
+		this.minBalanceAccountTypeMap.put("Current", -50.0);
 	}
 	
 	@Override

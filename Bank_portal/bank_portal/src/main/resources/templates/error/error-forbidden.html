@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Error - Retail Banking System</title>
+	<link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/webjars/bootstrap-icons/1.8.0/font/bootstrap-icons.css" rel="stylesheet" />
+	<link href="/css/error.css" rel="stylesheet" />
+	<link href="/css/dashboard.css" rel="stylesheet" />
+</head>
+
+<body class="text-center">
+
+	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+				height="20" fill="currentColor" class="bi bi-bank2 text-white" viewBox="0 0 16 16">
+				<path
+					d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+			</svg> Retail Banking System</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</header>
+
+	<main class="form-signin">
+			<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+				class="bi bi-shield-fill-x text-danger my-4" viewBox="0 0 16 16">
+				<path
+					d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zM6.854 5.146 8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 1 1 .708-.708z" />
+			</svg>
+			<p class="h3 mb-3 mx-5 fw-normal alert alert-danger">You don't have permission to access this page !</p>
+			<p>Please contact our team at retail banking system if you need help.</p>
+			<div th:replace="fragments/footer :: footer"></div>
+	</main>
+
+
+
+</body>

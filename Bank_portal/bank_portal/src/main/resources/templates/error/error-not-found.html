@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Error - Retail Banking System</title>
+	<link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/webjars/bootstrap-icons/1.8.0/font/bootstrap-icons.css" rel="stylesheet" />
+	<link href="/css/error.css" rel="stylesheet" />
+	<link href="/css/dashboard.css" rel="stylesheet" />
+</head>
+
+<body class="text-center">
+
+	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+				height="20" fill="currentColor" class="bi bi-bank2 text-white" viewBox="0 0 16 16">
+				<path
+					d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+			</svg> Retail Banking System</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</header>
+
+	<main class="form-signin">
+			<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+				class="bi bi-x-octagon-fill text-warning my-4" viewBox="0 0 16 16">
+				<path
+					d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+			</svg>
+			<p class="h3 mb-3 mx-5 fw-normal alert alert-warning">Oops...this page is not available !</p>
+			<p>Please contact our team at retail banking system if you need help.</p>
+			<div th:replace="fragments/footer :: footer"></div>
+	</main>
+
+
+
+</body>

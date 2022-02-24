@@ -13,13 +13,10 @@ import com.cts.Account.Utils;
 import com.cts.Account.model.Account;
 import com.cts.Account.model.AccountCreationStatus;
 import com.cts.Account.repo.AccountRepo;
-import com.cts.Account.repo.CustomerRepo;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {
-
-	@Autowired
-	CustomerRepo customerRepo;
 
 	@Autowired
 	AccountRepo accountRepo;
@@ -57,6 +54,16 @@ public class AccountServiceImpl implements AccountService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.ACCOUNT_NOT_FOUND);
 		} else {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Override
+	public Account getAccountByNo(String accountNo) {
+		if (accountRepo.findByAccountNo(accountNo) == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.ACCOUNT_NUMBER_NOT_FOUND);
+		}
+		else {
+			return accountRepo.findByAccountNo(accountNo);
 		}
 	}
 

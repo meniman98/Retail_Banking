@@ -12,4 +12,5 @@ public interface AccountService {
     AccountCreationStatus createAccount(@PathVariable Long customerId);
     List<Account> getCustomerAccounts(@PathVariable Long customerId);
     Account getAccount(@PathVariable Long accountId);
+    Account getAccountByNo(@PathVariable String accountNo);
 }

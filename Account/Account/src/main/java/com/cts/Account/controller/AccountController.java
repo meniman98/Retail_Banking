@@ -38,6 +38,10 @@ public class AccountController {
         return accountService.getAccount(accountId);
     }
 
-//    TODO: add a get account by number endpoint
+
+    @GetMapping(Utils.GET_ACCOUNT_BY_NUMBER)
+    public Account getAccountNumber(@PathVariable String accountNo) {
+        return accountService.getAccountByNo(accountNo);
+    }
 
 }

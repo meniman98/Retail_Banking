@@ -45,7 +45,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" href="/operation">
+							<a class="nav-link" href="/operation">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-cash-coin" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"
@@ -60,7 +60,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/transactions">
+							<a class="nav-link active" href="/transactions">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-server" viewBox="0 0 16 16">
 									<path
@@ -91,85 +91,49 @@
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">Online operation</h1>
-
-				</div>
-
-				<div class="card">
-					<div class="card-header bg-primary text-light fs-5">
-						Deposit / Withdrawal
-					</div>
-					<div class="p-2">
-					<p th:if="${status == 'ko'}" class="alert alert-danger d-flex justify-content-between">
-							<span>Operation failed</span> <svg xmlns="http://www.w3.org/2000/svg"
-								width="25" height="25" fill="currentColor" class="bi bi-exclamation-circle-fill"
-								viewBox="0 0 16 16">
-								<path
-									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-							</svg> </p>
-					<form th:action="@{/operation}" th:object="${operation}" method="POST">
-						<div class="row g-3">
-							<div class="col-sm-4">
-								<label for="firstName" class="form-label">Operation</label>
-								<select class="form-select" th:field="*{name}" aria-label="Default select example">
-									<option selected value="Deposit">Deposit</option>
-									<option value="Withdraw">Withdraw</option>
-								</select>
-								<div class="text-danger" th:if="${#fields.hasErrors('name')}"
-									th:errors="*{name}"></div>
-							</div>
-							<div class="col-sm-4">
-								<label for="firstName" class="form-label">Account Number</label>
-								<select class="form-select" th:field="*{accountId}" aria-label="Default select example">
-									<option th:each="account:${accounts}" th:value="${account.accountId}"
-										th:text="${account.accountNo}" />
-								</select>
-								<div class="text-danger" th:if="${#fields.hasErrors('accountId')}"
-									th:errors="*{accountId}"></div>
-							</div>
-
-							<div class="col-sm-4">
-								<label for="lastName" class="form-label">Amount</label>
-								<input type="text" th:field="*{amount}"  class="form-control" />
-								<div class="text-danger" th:if="${#fields.hasErrors('amount')}"
-									th:errors="*{amount}"></div>
-							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-success" value="Validate" />
-							</div>
+					<h1 class="h2">Your transaction history</h1>
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<div class="btn-group me-2">
+							<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+							<button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
 						</div>
-					</form>
+						<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+							<span data-feather="calendar"></span>
+							This week
+						</button>
 					</div>
 				</div>
 
+				<div class="table-responsive">
+					<div th:unless="${transactions}">
+						<p class="alert alert-warning">You have no transaction yet !</p>
+					</div>
+					<table class="table table-striped table-sm">
+						<thead>
+							<tr>
+								<th scope="col">#ID</th>
+								<th scope="col">Counterparty</th>
+								<th scope="col">Date</th>
+								<th scope="col">Type</th>
+								<th scope="col">Status</th>
+								<th scope="col">Amount</th>
+							</tr>
+						</thead>
+						<tbody th:if="${transactions}">
+							<tr th:each="transaction : ${transactions}">
+								<td th:text="${transaction.transactionID}" />
+								<td th:text="${transaction.counterParty.name}" />
+								<td th:text="${transaction.transactionDate}" />
+								<td th:text="${transaction.transactionType}" />
+								<td th:text="${transaction.transactionStatus}" />
+								<td th:text="${transaction.transactionStatus}" />
+								<td th:text="${transaction.amount}" />
+							</tr>
+						</tbody>
 
-				<div class="card mt-5">
-					<div class="card-header bg-primary text-light fs-5">
-						Transfer
-					</div>
-					<div class="p-2">
-					<form action="#" th:action="@{/operation}" method="POST">
-						<div class="row g-3">
-						<div class="col-sm-4">
-								<label for="firstName" class="form-label">Source account number</label>
-								<select class="form-select" aria-label="Default select example">
-									<option th:each="account:${accounts}" th:value="${account.accountId}"
-										th:text="${account.accountNo}" />
-								</select>
-							</div>
-							<div class="col-sm-4">
-								<label for="lastName" class="form-label">Destination account number</label>
-								<input type="text" class="form-control" />
-							</div>
-							
-							<div class="col-sm-4">
-								<label for="lastName" class="form-label">Amount</label>
-								<input type="text" class="form-control" />
-							</div>
-						</div>
-					</form>
-					</div>
+					</table>
 				</div>
+				
 
 			</main>
 		</div>

@@ -58,8 +58,9 @@ public class CustomerService {
 			newCustomerUser.setPassword(this.passwordEncoder.encode(customer.getPassword()));
 			newCustomerUser.setEmail(customer.getEmail());
 			newCustomerUser.setCustomerFirstName(customer.getFirstName());
-			Authority customerAuhority = authorityRepo.findByName("ROLE_CUSTOMER");
-			newCustomerUser.getAuthorities().add(customerAuhority);
+			Authority customerAuthority = new Authority();
+			customerAuthority.setName("ROLE_CUSTOMER");
+			newCustomerUser.getAuthorities().add(customerAuthority);
 			this.userRepo.save(newCustomerUser);
 			return status;
 		} catch(Exception e) {

@@ -6,4 +6,5 @@ import com.pod2.microservice.customer.model.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	Customer findByCustomerId(Long customerId);
+	Customer findByFirstName(String firstName);
 }

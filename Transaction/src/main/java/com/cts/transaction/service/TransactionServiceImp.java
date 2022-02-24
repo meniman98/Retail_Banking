@@ -1,13 +1,19 @@
 package com.cts.transaction.service;
 
-import com.cts.transaction.model.*;
-import com.cts.transaction.repo.TransactionRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cts.transaction.model.AccountSummary;
+import com.cts.transaction.model.Counterparty;
+import com.cts.transaction.model.CustomerSummary;
+import com.cts.transaction.model.RuleStatus;
+import com.cts.transaction.model.Transaction;
+import com.cts.transaction.model.TransactionStatus;
+import com.cts.transaction.repo.TransactionRepo;
 
 @Service
 public class TransactionServiceImp implements TransactionService {
@@ -35,6 +41,7 @@ public class TransactionServiceImp implements TransactionService {
                     "completed");
             return transactionStatus;
         } catch (Exception e) {
+        	e.printStackTrace();
             // cancel transaction if failed to communicate with Account Microservice
             TransactionStatus canceledTransaction = new TransactionStatus();
             canceledTransaction.setAccountId(accountId);
@@ -69,6 +76,7 @@ public class TransactionServiceImp implements TransactionService {
                     "completed");
             return transactionStatus;
         } catch (Exception e) {
+        	e.printStackTrace();
             // cancel transaction if failed to communicate with Account or Rules Microservices
             TransactionStatus canceledTransaction = new TransactionStatus();
             canceledTransaction.setAccountId(accountId);

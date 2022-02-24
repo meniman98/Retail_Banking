@@ -2,6 +2,7 @@ package com.cts.portal.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -57,12 +58,18 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/getCustomer")
-	public String getCustomerAction(@RequestParam(required = false) String firstName) {
+	public String getCustomerAction(ModelMap model, @RequestParam(required = false) String firstName) {
+		if (firstName != null) {
+			Customer customer = this.customerService.getCustomer(firstName);
+			model.addAttribute("customer", customer);
+		}
 		return "customer-details";
 	}
 	
 	@GetMapping("/customers")
 	public String getListCustomer(ModelMap model) {
+		List<Customer> customers = this.customerService.getCustomers();
+		model.addAttribute("customers", customers);
 		return "list-customer";
 	}
 }

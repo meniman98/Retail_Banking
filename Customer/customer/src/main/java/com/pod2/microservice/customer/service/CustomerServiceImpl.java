@@ -89,4 +89,32 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer;
 	}
 
+	@Override
+	public Customer getDetailsByFirstName(String firstName) {
+		Customer customer = this.customerRepository.findByFirstName(firstName);
+		if (null != customer) {
+			this.log.info("Successfully fetched details of Customer with First Name = " + firstName + " in Database");
+			try {
+				this.log.info("Interract with Account Microservice to request Accounts summary of Customer with First Name = " + firstName);
+				List<AccountSummary> accountsSummary = this.accountMicroserviceProxy
+						.getCustomerAccounts(customer.getCustomerId());
+				if (null != accountsSummary && !accountsSummary.isEmpty()) {
+					customer.setAccountsSummary(accountsSummary);
+					this.log.info("Successfully fetched Accounts summary of Customer with FirstName = " + firstName);
+				}
+			} catch (Exception e) {
+				this.log.error("Failed to interract with Account Service and retrieve accounts summary of customer with First Name = " + firstName);
+			}
+		} else {
+			this.log.error("Customer with First Name = " + firstName + " not found in the Database");
+		}
+		return customer;
+	}
+
+	@Override
+	public List<Customer> getAllCustomerDetails() {
+		this.log.info("Fetch all customers in DB");
+		return this.customerRepository.findAll();
+	}
+
 }

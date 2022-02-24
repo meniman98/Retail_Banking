@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8">
@@ -15,7 +15,7 @@
 <body>
 
 	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Retail Banking System - Employee Back Office</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">Retail Banking System - Employee Back Office</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
 			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
 			aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
 		</button>
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-				<a class="nav-link px-3" href="#">Sign out</a>
+				<a class="nav-link px-3" href="/logout">Sign out</a>
 			</div>
 		</div>
 	</header>
@@ -86,8 +86,8 @@
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Customer details</h1>
-					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-						<input type="text" class="form-control" placeholder="Search by First Name..."
+					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/getCustomer" method="GET">
+						<input name="firstName" type="text" autofocus class="form-control" placeholder="Search by First Name..."
 							aria-label="Search">
 					</form>
 				</div>
@@ -110,7 +110,7 @@
 						</p>
 					</div>
 
-				<section class="container-fluid">
+				<section th:if="${customer}" class="container-fluid">
 
 					<h4 class="d-flex justify-content-center align-items-center mb-3">
 						<span class="text-primary">Personnal Information</span>
@@ -132,21 +132,21 @@
 										<h6 class="my-0">First Name</h6>
 										<small class="text-muted">Customer first name</small>
 									</div>
-									<span class="text-muted">John</span>
+									<span class="text-muted" th:text="${customer.firstName}"/>
 								</li>
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
 										<h6 class="my-0">Last Name</h6>
 										<small class="text-muted">Customer last name</small>
 									</div>
-									<span class="text-muted">DOE</span>
+									<span class="text-muted" th:text="${customer.lastName}" />
 								</li>
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
 										<h6 class="my-0">Date of birth</h6>
 										<small class="text-muted">Customer date of birth</small>
 									</div>
-									<span class="text-muted">11/11/2001</span>
+									<span class="text-muted" th:text="${customer.dateOfBirth}" />
 								</li>
 							</ul>
 						</div>
@@ -167,14 +167,14 @@
 										<h6 class="my-0">Email address</h6>
 										<small class="text-muted">Customer email address</small>
 									</div>
-									<span class="text-muted">john.doe@example.com</span>
+									<span class="text-muted" th:text="${customer.email}" />
 								</li>
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
 										<h6 class="my-0">Mobile Number</h6>
 										<small class="text-muted">Customer mobile number</small>
 									</div>
-									<span class="text-muted">01234567989</span>
+									<span class="text-muted" th:text="${customer.mobileNumber}" />
 								</li>
 
 								<li class="list-group-item d-flex justify-content-between lh-sm">
@@ -182,7 +182,7 @@
 										<h6 class="my-0">Address</h6>
 										<small class="text-muted">Customer personnal address</small>
 									</div>
-									<span class="text-muted">1 Street Test Canada</span>
+									<span class="text-muted" th:text="${customer.address}" />
 								</li>
 							</ul>
 						</div>
@@ -191,43 +191,17 @@
 					<h4 class="d-flex justify-content-center align-items-center mb-3">
 						<span class="text-primary">Accounts summary</span>
 					</h4>
-					<div class="d-flex justify-content-around">
-						<div class="card w-50 m-2">
+					<div class="d-flex justify-content-around" th:if="${customer.accountsSummary.size > 0}">
+						<div class="card w-50 m-2" th:each="account: ${customer.accountsSummary}">
 							<div class="card-header d-flex justify-content-between">
-								<span>Current Account</span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								<span th:if="${account.accountType =='Current'}">Current Account</span>
+								<svg th:if="${account.accountType == 'Current'}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-wallet2" viewBox="0 0 16 16">
 									<path
 										d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
 								</svg>
-							</div>
-
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item d-flex justify-content-between lh-sm">
-									<div>
-										<h6 class="my-0">Account Number</h6>
-									</div>
-									<span class="text-muted">7894563</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between lh-sm">
-									<div>
-										<h6 class="my-0">Date of creation</h6>
-									</div>
-									<span class="text-muted">21/02/2022</span>
-								</li>
-								<li class="list-group-item d-flex justify-content-between">
-									<div class="text-info">
-										<h6 class="my-0">Balance</h6>
-									</div>
-									<span class="text-info">−$5</span>
-								</li>
-
-							</ul>
-						</div>
-						<div class="card w-50 m-2">
-							<div class="card-header d-flex justify-content-between">
-								<span>Savings Account</span>
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+								<span th:if="${account.accountType == 'Savings'}">Savings Account</span>
+								<svg th:if="${account.accountType == 'Savings'}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 									class="bi bi-piggy-bank" viewBox="0 0 16 16">
 									<path
 										d="M5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm1.138-1.496A6.613 6.613 0 0 1 7.964 4.5c.666 0 1.303.097 1.893.273a.5.5 0 0 0 .286-.958A7.602 7.602 0 0 0 7.964 3.5c-.734 0-1.441.103-2.102.292a.5.5 0 1 0 .276.962z" />
@@ -235,30 +209,37 @@
 										d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595zM2.516 6.26c.455-2.066 2.667-3.733 5.448-3.733 3.146 0 5.536 2.114 5.536 4.542 0 1.254-.624 2.41-1.67 3.248a.5.5 0 0 0-.165.535l.66 2.175h-.985l-.59-1.487a.5.5 0 0 0-.629-.288c-.661.23-1.39.359-2.157.359a6.558 6.558 0 0 1-2.157-.359.5.5 0 0 0-.635.304l-.525 1.471h-.979l.633-2.15a.5.5 0 0 0-.17-.534 4.649 4.649 0 0 1-1.284-1.541.5.5 0 0 0-.446-.275h-.56a.5.5 0 0 1-.492-.414l-.254-1.46h.933a.5.5 0 0 0 .488-.393zm12.621-.857a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199z" />
 								</svg>
 							</div>
+
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
 										<h6 class="my-0">Account Number</h6>
 									</div>
-									<span class="text-muted">7894563</span>
+									<span class="text-muted" th:text="${account.accountNo}"/>
 								</li>
 								<li class="list-group-item d-flex justify-content-between lh-sm">
 									<div>
 										<h6 class="my-0">Date of creation</h6>
 									</div>
-									<span class="text-muted">21/02/2022</span>
+									<span class="text-muted" th:text="${account.dateOfCreation}" />
 								</li>
 								<li class="list-group-item d-flex justify-content-between">
 									<div class="text-info">
 										<h6 class="my-0">Balance</h6>
 									</div>
-									<span class="text-info">−$5</span>
+									<span class="text-info" th:text="${account.balance}"/>
 								</li>
 
 							</ul>
 						</div>
 					</div>
+					<div th:unless="${customer.accountsSummary.size > 0}">
+						<p class="alert alert-warning">No accounts found for <strong th:text="${customer.firstName}"/> <strong th:text="${customer.lastName}"/></p>
+					</div>
 
+				</section>
+				<section th:unless="${customer}">
+					<p class="alert alert-warning">No customer found</p>
 				</section>
 
 			</main>

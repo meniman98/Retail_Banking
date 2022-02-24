@@ -31,10 +31,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,11 +72,6 @@
 			<artifactId>jquery</artifactId>
 			<version>1.9.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>bootstrap-datepicker</artifactId>
-			<version>1.0.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.webjars.npm/bootstrap-icons -->
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
@@ -101,12 +92,10 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
-			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
-			<version>3.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -133,6 +122,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

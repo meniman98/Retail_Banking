@@ -1,5 +1,7 @@
 package com.cts.portal.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -38,4 +40,6 @@ public class Customer {
 	@NotNull
 	@Size(min=2, message="Enter at least 2 characters....")
 	private String password;
+	
+	private List<AccountSummary> accountsSummary;
 }

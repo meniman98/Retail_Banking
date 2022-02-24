@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<title>Retail Banking System</title>
+	<link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="webjars/bootstrap-icons/1.8.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+
+
+</head>
+
+<body>
+
+	<main>
+		<div class="container py-4">
+			<header class="pb-3 mb-4 border-bottom">
+				<a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+						class="bi bi-bank2" viewBox="0 0 16 16">
+						<path
+							d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+					</svg>
+					<span class="fs-4 mx-3">Retail Banking System</span>
+				</a>
+			</header>
+
+			<div class="row align-items-md-stretch">
+				<div class="col-md-6">
+					<div class="h-100 p-5 text-white bg-dark rounded-3">
+						<h2>Bank Client</h2>
+						<p>As a customer, you can view your acounts and balances, transact, view your account statements and transactions.</p>
+						<a class="btn btn-outline-light" type="button" href="/dashboard">Go to client dashboard</a>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="h-100 p-5 bg-light border rounded-3">
+						<h2>Bank Employee</h2>
+						<p>As an employee, you can create new customer, view list of customer and their account details.</p>
+						<a class="btn btn-outline-secondary" type="button" href="/employee">Go to employee dashboard</a>
+					</div>
+				</div>
+			</div>
+
+			<div th:replace="fragments/footer :: footer"></div>
+		</div>
+	</main>
+
+
+
+</body>
+
+</html>

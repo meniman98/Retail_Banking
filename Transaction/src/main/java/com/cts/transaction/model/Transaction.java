@@ -21,7 +21,7 @@ public class Transaction {
     @Column(name = "statementID")
     private int statementID;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "counterpartyID", referencedColumnName = "id")
     private Counterparty counterParty;
 

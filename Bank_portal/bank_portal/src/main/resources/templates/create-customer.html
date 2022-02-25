@@ -22,11 +22,7 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="navbar-nav">
-			<div class="nav-item text-nowrap">
-				<a class="nav-link px-3" href="/logout">Sign out</a>
-			</div>
-		</div>
+		<div th:replace="fragments/logout :: logout"></div>
 	</header>
 
 	<div class="container-fluid">
@@ -96,8 +92,10 @@
 								viewBox="0 0 16 16">
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-							</svg> </p>
-						<p th:unless="${status.message == 'ko'}" class="alert alert-success d-flex justify-content-between">
+							</svg>
+						</p>
+						<p th:unless="${status.message == 'ko'}"
+							class="alert alert-success d-flex justify-content-between">
 							<span th:text="${status.message}" />
 							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
 								class="bi bi-check-circle-fill" viewBox="0 0 16 16">

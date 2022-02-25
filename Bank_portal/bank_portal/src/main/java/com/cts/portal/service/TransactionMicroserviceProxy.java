@@ -13,14 +13,14 @@ import com.cts.portal.dto.TransactionStatus;
 
 @FeignClient(name = "${transaction.microservice.name}")
 public interface TransactionMicroserviceProxy {
-	@PostMapping(value = "/deposit/{accountID}")
-	public TransactionStatus deposit(@PathVariable Long accountID, @RequestParam double amount);
+	@PostMapping(value = "/deposit/{accountId}/{amount}")
+	public TransactionStatus deposit(@PathVariable Long accountId, @PathVariable double amount);
 
-	@PostMapping(value = "/withdraw/{accountID}")
-	public TransactionStatus withdraw(@PathVariable Long accountID, @RequestParam double amount);
+	@PostMapping(value = "/withdraw/{accountId}/{amount}")
+	public TransactionStatus withdraw(@PathVariable Long accountId, @PathVariable double amount);
 
-	@PostMapping(value = "/transfer/{accountID}")
-	public TransactionStatus transfer(@PathVariable Long sourceAccountID, @RequestParam Long destAccountID, @RequestParam double amount);
+	@PostMapping(value = "/transfer/{sourceAccountId}/{destAccountID}/{amount}")
+	public TransactionStatus transfer(@PathVariable Long sourceAccountId, @PathVariable Long destAccountID, @PathVariable double amount);
 
 	@GetMapping(value = "/getTransaction/{customerID}")
 	public List<Transaction> getTransaction(@PathVariable Long customerID);

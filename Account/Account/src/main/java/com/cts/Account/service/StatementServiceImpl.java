@@ -26,10 +26,10 @@ public class StatementServiceImpl implements StatementService {
     public List<Statement> getStatementListByDate(Long accountId, LocalDate startDate, LocalDate endDate) {
         if (accountRepo.existsById(accountId)) {
             List<Statement> statementList = statementRepo.findAllByDate(accountId, startDate, endDate);
-            if (statementList.isEmpty()) {
-//                Account ID exists but doesn't belong to any statement
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.STATEMENT_NOT_FOUND);
-            }
+//            if (statementList.isEmpty()) {
+////                Account ID exists but doesn't belong to any statement
+//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.STATEMENT_NOT_FOUND);
+//            }
             return statementList;
         } else if (!accountRepo.existsById(accountId)) {
 //            This Account ID doesn't exist

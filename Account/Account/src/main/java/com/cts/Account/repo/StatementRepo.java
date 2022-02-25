@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface StatementRepo extends JpaRepository<Statement, Long> {
 
-    @Query(value = "SELECT * FROM statement WHERE account_id = ?1 AND date > ?2 AND date <= ?3 ",
+    @Query(value = "SELECT * FROM statement WHERE account_id = :accountId AND date BETWEEN :startDate AND :endDate ",
     nativeQuery = true)
     List<Statement> findAllByDate(Long accountId, LocalDate startDate, LocalDate endDate);
 

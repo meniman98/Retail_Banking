@@ -22,7 +22,7 @@ public class Account {
     private double balance;
     private long customerId;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Statement> statementSet;
 
     /*Creating a constructor for customerId only

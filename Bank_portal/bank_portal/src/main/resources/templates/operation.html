@@ -92,10 +92,10 @@
 				</div>
 
 				<div class="card">
-					<div class="card-header bg-secondary text-light fs-5">
+					<div class="card-header bg-secondary bg-gradient text-light fs-6">
 						Deposit / Withdrawal
 					</div>
-					<div class="p-2">
+					<div class="p-3">
 						<p th:if="${status == 'ko'}" class="alert alert-danger d-flex justify-content-between">
 							<span>Operation failed</span> <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
 								fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
@@ -105,33 +105,63 @@
 						</p>
 						<form action="#" th:action="@{/operation}" th:object="${operation}" method="POST">
 							<div class="row g-3">
-								<div class="col-sm-4">
-									<label for="firstName" class="form-label">Operation</label>
-									<select class="form-select" th:field="*{name}" aria-label="Default select example">
-										<option selected value="Deposit">Deposit</option>
-										<option value="Withdraw">Withdraw</option>
-									</select>
+								<div class="col-sm-3">
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor"
+												class="bi bi-plus-slash-minus" viewBox="0 0 16 16">
+												<path
+													d="m1.854 14.854 13-13a.5.5 0 0 0-.708-.708l-13 13a.5.5 0 0 0 .708.708ZM4 1a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 4 1Zm5 11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5A.5.5 0 0 1 9 12Z" />
+											</svg></span>
+										<select class="form-select" th:field="*{name}"
+											aria-label="Default select example">
+											<option selected value="Deposit">Deposit</option>
+											<option value="Withdraw">Withdraw</option>
+										</select>
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
 									</div>
 								</div>
 								<div class="col-sm-4">
-									<label for="firstName" class="form-label">Account</label>
-									<select class="form-select" th:field="*{accountId}"
-										aria-label="Default select example">
-										<option th:each="account:${accounts}" th:value="${account.accountId}"><span th:text="${account.accountType}" /> - <span th:text="${account.accountNo}" /></option>
-									</select>
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor" class="bi bi-bank"
+												viewBox="0 0 16 16">
+												<path
+													d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z" />
+											</svg></span>
+										<select class="form-select" th:field="*{accountId}"
+											aria-label="Default select example">
+											<option th:each="account:${accounts}" th:value="${account.accountId}"><span
+													th:text="${account.accountType}" /> - <span
+													th:text="${account.accountNo}" /></option>
+										</select>
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('accountId')}"
 										th:errors="*{accountId}"></div>
 								</div>
 
-								<div class="col-sm-4">
-									<label for="lastName" class="form-label">Amount</label>
-									<input type="text" th:field="*{amount}" class="form-control" />
+								<div class="col-sm-3">
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor" class="bi bi-currency-dollar"
+												viewBox="0 0 16 16">
+												<path
+													d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
+											</svg></span>
+										<input type="text" th:field="*{amount}" class="form-control" />
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('amount')}"
 										th:errors="*{amount}"></div>
 								</div>
 								<div class="col-sm-2">
-									<input type="submit" class="btn btn-success" value="Validate" />
+									<button type="submit" class="btn w-100 btn-success"><svg
+											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-arrow-right-circle-fill"
+											viewBox="0 0 16 16">
+											<path
+												d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+										</svg> Validate</button>
 								</div>
 							</div>
 						</form>
@@ -140,35 +170,66 @@
 
 
 				<div class="card mt-5">
-					<div class="card-header bg-secondary text-light fs-5">
+					<div class="card-header bg-gradient fs-6 bg-secondary text-light fs-5">
 						Transfer
 					</div>
-					<div class="p-2">
+					<div class="p-3">
 						<form action="#" th:action="@{/transfer}" th:object="${transfer}" method="POST">
 							<div class="row g-3">
-								<div class="col-sm-4">
-									<label for="firstName" class="form-label">Source account number</label>
-									<select class="form-select" th:field="*{sourceAccountId}" aria-label="Default select example">
-										<option th:each="account:${accounts}" th:value="${account.accountId}"><span th:text="${account.accountType}" /> - <span th:text="${account.accountNo}" /></option>
-									</select>
+								<div class="col-sm-3">
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor" class="bi bi-bank"
+												viewBox="0 0 16 16">
+												<path
+													d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z" />
+											</svg></span>
+										<select class="form-select" th:field="*{sourceAccountId}"
+											aria-label="Default select example">
+											<option th:each="account:${accounts}" th:value="${account.accountId}"><span
+													th:text="${account.accountType}" /> - <span
+													th:text="${account.accountNo}" /></option>
+										</select>
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('sourceAccountId')}"
 										th:errors="*{sourceAccountId}"></div>
 								</div>
 								<div class="col-sm-4">
-									<label for="lastName" class="form-label">Destination account number</label>
-									<input type="text" th:field="*{targetAccountNo}" class="form-control" />
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor" class="bi bi-bank"
+												viewBox="0 0 16 16">
+												<path
+													d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z" />
+											</svg></span>
+										<input type="text" th:field="*{targetAccountNo}"
+											placeholder="Destination Account Number" class="form-control" />
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('targetAccountNo')}"
 										th:errors="*{targetAccountNo}"></div>
 								</div>
 
-								<div class="col-sm-4">
-									<label for="lastName" class="form-label">Amount</label>
-									<input type="text" th:field="*{amount}" class="form-control" />
+								<div class="col-sm-3">
+									<div class="input-group has-validation">
+										<span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg"
+												width="16" height="16" fill="currentColor" class="bi bi-currency-dollar"
+												viewBox="0 0 16 16">
+												<path
+													d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
+											</svg></span>
+										<input type="text" th:field="*{amount}" class="form-control" />
+									</div>
 									<div class="text-danger" th:if="${#fields.hasErrors('amount')}"
 										th:errors="*{amount}"></div>
 								</div>
 								<div class="col-sm-2">
-									<input type="submit" class="btn btn-success" value="Validate" />
+									<button type="submit" class="btn w-100 btn-success"><svg
+											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-arrow-right-circle-fill"
+											viewBox="0 0 16 16">
+											<path
+												d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+										</svg> Validate</button>
 								</div>
 							</div>
 						</form>

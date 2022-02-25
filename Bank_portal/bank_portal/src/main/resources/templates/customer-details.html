@@ -83,8 +83,18 @@
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Customer details</h1>
 					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/getCustomer" method="GET">
+						<div class="input-group has-validation">
+										<span class="input-group-text">
 						<input name="firstName" type="text" autofocus class="form-control" placeholder="Search by First Name..."
 							aria-label="Search">
+							<div class="col-sm-2">
+							<button type="submit" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg"
+									width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+									<path
+										d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+								</svg></button>
+							</div>
+						</div>
 					</form>
 				</div>
 				
@@ -113,7 +123,7 @@
 					</h4>
 					<div class="d-flex justify-content-around">
 						<div class="card w-50 m-2">
-							<div class="card-header d-flex justify-content-between">
+							<div class="card-header  bg-gradient fs-6 bg-secondary text-white d-flex justify-content-between">
 								<span>Identity</span>
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-person" viewBox="0 0 16 16">
@@ -148,7 +158,7 @@
 						</div>
 
 						<div class="card w-50 m-2">
-							<div class="card-header d-flex justify-content-between">
+							<div class="card-header bg-gradient fs-6 bg-secondary text-white d-flex justify-content-between">
 								<span>Contact</span>
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-envelope" viewBox="0 0 16 16">
@@ -189,7 +199,7 @@
 					</h4>
 					<div class="d-flex justify-content-around" th:if="${customer.accountsSummary.size > 0}">
 						<div class="card w-50 m-2" th:each="account: ${customer.accountsSummary}">
-							<div class="card-header d-flex justify-content-between">
+							<div class="card-header bg-gradient fs-6 bg-secondary text-white d-flex justify-content-between">
 								<span th:if="${account.accountType =='Current'}">Current Account</span>
 								<svg th:if="${account.accountType == 'Current'}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 									class="bi bi-wallet2" viewBox="0 0 16 16">

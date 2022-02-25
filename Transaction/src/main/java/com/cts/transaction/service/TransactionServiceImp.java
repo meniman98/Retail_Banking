@@ -2,6 +2,7 @@ package com.cts.transaction.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,7 @@ public class TransactionServiceImp implements TransactionService {
         for (AccountSummary accountData : accounts) {
             transactionList.addAll(transactionRepo.findByAccountID(accountData.getAccountId()));
         }
+        Collections.reverse(transactionList);
         return transactionList;
     }
 

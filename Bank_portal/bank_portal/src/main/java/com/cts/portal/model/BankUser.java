@@ -25,7 +25,6 @@ public class BankUser {
 	private Long customerId;
 	private String customerFirstName;
 	private String email;
-	@JsonIgnore
 	private String password;
 	private String role;
 	

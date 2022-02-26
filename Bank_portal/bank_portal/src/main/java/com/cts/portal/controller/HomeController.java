@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cts.portal.dto.AccountSummary;
 import com.cts.portal.dto.Customer;
+import com.cts.portal.dto.LoginUser;
 import com.cts.portal.dto.Operation;
 import com.cts.portal.dto.Statement;
 import com.cts.portal.dto.StatementQuery;
@@ -31,11 +33,12 @@ import com.cts.portal.dto.Transaction;
 import com.cts.portal.dto.TransactionStatus;
 import com.cts.portal.dto.Transfer;
 import com.cts.portal.model.BankUser;
+import com.cts.portal.security.SecurityService;
 import com.cts.portal.service.CustomerService;
 import com.cts.portal.service.TransactionService;
 
 @Controller
-@SessionAttributes({ "user", "accounts" })
+@SessionAttributes({ "user", "accounts", "bearerToken" })
 public class HomeController {
 
 	@Autowired
@@ -43,16 +46,33 @@ public class HomeController {
 
 	@Autowired
 	private TransactionService transactionService;
+	
+	@Autowired
+	private SecurityService securityService;
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		binder.registerCustomEditor(LocalDate.class, new CustomDateEditor(dateFormat, false));
 	}
+	
+	@ModelAttribute("bearerToken")
+	public String getBearerToken(@ModelAttribute("user") BankUser user, Principal principal) {
+		LoginUser login = new LoginUser();
+		login.setUsername(user.getEmail());
+		login.setPassword(user.getPassword());
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
+		String token = this.securityService.getToken(login);
+		if (token == null) {
+			throw new BadCredentialsException("No user registered as " + login.getUsername());
+		}
+		return "Bearer " + token;
+	}
 
 	@GetMapping("/dashboard")
-	public String customerHomepageAction(ModelMap model, @ModelAttribute("user") BankUser user) {
-		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName());
+	public String customerHomepageAction(ModelMap model, @ModelAttribute("user") BankUser user, @ModelAttribute("bearerToken") String bearerToken) {
+		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName(), bearerToken);
 		model.addAttribute("customer", customer);
 		return "dashboard";
 	}
@@ -65,8 +85,8 @@ public class HomeController {
 	}
 
 	@GetMapping("/transactions")
-	public String getTransactionAction(ModelMap model, @ModelAttribute("user") BankUser user) {
-		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName());
+	public String getTransactionAction(ModelMap model, @ModelAttribute("user") BankUser user, @ModelAttribute("bearerToken") String bearerToken) {
+		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName(), bearerToken);
 		List<Transaction> transactions = this.transactionService.getTransactions(customer.getCustomerId());
 		model.addAttribute("transactions", transactions);
 		return "list-transaction";
@@ -136,8 +156,8 @@ public class HomeController {
 	}
 
 	@ModelAttribute("accounts")
-	public List<AccountSummary> getAccountsNo(ModelMap model, @ModelAttribute("user") BankUser user) {
-		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName());
+	public List<AccountSummary> getAccountsNo(ModelMap model, @ModelAttribute("user") BankUser user, @ModelAttribute("bearerToken") String bearerToken) {
+		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName(), bearerToken);
 		return customer.getAccountsSummary();
 	}
 }

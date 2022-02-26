@@ -8,8 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,10 +25,11 @@ public class BankUser {
 	private Long customerId;
 	private String customerFirstName;
 	private String email;
+	@JsonIgnore
 	private String password;
 	private String role;
 	
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Authority> authorities;
 }

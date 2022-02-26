@@ -1,5 +1,7 @@
 package com.pod2.microservice.customer.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -21,6 +23,7 @@ import com.google.gson.Gson;
 import com.pod2.microservice.customer.model.Customer;
 import com.pod2.microservice.customer.model.CustomerCreationStatus;
 import com.pod2.microservice.customer.service.CustomerService;
+import com.pod2.microservice.customer.service.SecurityService;
 
 @WebMvcTest(CustomerRestController.class)
 public class CustomerRestControllerTest {
@@ -30,12 +33,15 @@ public class CustomerRestControllerTest {
 	@MockBean
 	private CustomerService customerService;
 	
+	@MockBean
+	private SecurityService securityService;
+	
 	@Autowired
 	private Gson gson;
 
-	@Value("${url.create.customer}")
+	@Value("${create.customer.url}")
 	private String URL_CREATE_CUSTOMER;
-	@Value("${url.details.customer}")
+	@Value("${details.customer.url}")
 	private String URL_DETAILS_CUSTOMER;
 	
 	private Customer validCustomer = new Customer(1L, "Test", "Test", "test@test.com", "0123456789", "1, Test France",
@@ -49,11 +55,17 @@ public class CustomerRestControllerTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		
 		// Mock CustomerService
 		Mockito.when(this.customerService.create(this.validCustomer)).thenReturn(this.customerCreationStatus);
 		Mockito.when(this.customerService.create(this.invalidCustomer)).thenReturn(null);		
 		Mockito.when(this.customerService.getDetailsById(this.SAVED_CUSTOMER_ID)).thenReturn(this.validCustomer);		
 		Mockito.when(this.customerService.getDetailsById(this.UNSAVED_CUSTOMER_ID)).thenReturn(null);		
+		
+		// Mock SecurityService
+		Mockito.when(this.securityService.hasCustomerRole(any())).thenReturn(true);
+		Mockito.when(this.securityService.hasEmployeeRole(any())).thenReturn(true);
+		Mockito.when(this.securityService.isMember(any())).thenReturn(true);
 	}
 	
 	@Test

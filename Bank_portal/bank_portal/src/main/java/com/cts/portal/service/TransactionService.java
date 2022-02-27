@@ -26,7 +26,7 @@ public class TransactionService {
 	
 	public TransactionStatus postTransfer(@Valid Transfer transfer, String bearerToken) {
 		try {
-			AccountSummary destAccount = this.accountProxy.getAccountNumber(transfer.getTargetAccountNo());
+			AccountSummary destAccount = this.accountProxy.getAccountNumber(transfer.getTargetAccountNo(), bearerToken);
 			return transactionProxy.transfer(transfer.getSourceAccountId(), destAccount.getAccountId(), transfer.getAmount(), bearerToken);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -47,18 +47,18 @@ public class TransactionService {
 		}
 	}
 
-	public List<Transaction> getTransactions(Long customerId) {
+	public List<Transaction> getTransactions(Long customerId, String bearerToken) {
 		try {
-			return this.transactionProxy.getTransaction(customerId);
+			return this.transactionProxy.getTransaction(customerId, bearerToken);
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public List<Statement> getStatements(Long accountId, LocalDate startDate, LocalDate endDate) {
+	public List<Statement> getStatements(Long accountId, LocalDate startDate, LocalDate endDate, String bearerToken) {
 		try {
-			return this.accountProxy.getStatementList(accountId, startDate, endDate);
+			return this.accountProxy.getStatementList(accountId, startDate, endDate, bearerToken);
 		} catch(Exception e) {
 			return null;
 		}

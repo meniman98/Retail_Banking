@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.pod2.microservice.customer.model.Customer;
 import com.pod2.microservice.customer.model.CustomerCreationStatus;
@@ -36,42 +37,42 @@ public class CustomerRestController {
 	public ResponseEntity<CustomerCreationStatus> createCustomer(@RequestBody Customer customer,
 			@RequestHeader(name = "Authorization", required = false) String bearerToken) {
 		if (securityService.hasEmployeeRole(bearerToken)) {
-			CustomerCreationStatus status = this.customerService.create(customer);
+			CustomerCreationStatus status = this.customerService.create(customer, bearerToken);
 			if (null != status) {
 				return ResponseEntity.ok(status);
 			} else {
 				return ResponseEntity.badRequest().build();
 			}
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only bank Employee can access this resource.");
 	}
 
 	@GetMapping("${details.customer.url}")
 	public ResponseEntity<Customer> getCustomerDetails(@RequestParam Long customerId,
 			@RequestHeader(name = "Authorization", required = false) String bearerToken) {
 		if (securityService.isMember(bearerToken)) {
-			Customer customer = this.customerService.getDetailsById(customerId);
+			Customer customer = this.customerService.getDetailsById(customerId, bearerToken);
 			if (null != customer) {
 				return ResponseEntity.ok(customer);
 			} else {
 				return ResponseEntity.notFound().build();
 			}
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only members can access this resource.");
 	}
 
 	@GetMapping("${details.customer.byfirstname.url}")
 	public ResponseEntity<Customer> getCustomerDetails(@RequestParam String firstName,
 			@RequestHeader(name = "Authorization", required = false) String bearerToken) {
 		if (this.securityService.isMember(bearerToken)) {
-			Customer customer = this.customerService.getDetailsByFirstName(firstName);
+			Customer customer = this.customerService.getDetailsByFirstName(firstName, bearerToken);
 			if (null != customer) {
 				return ResponseEntity.ok(customer);
 			} else {
 				return ResponseEntity.notFound().build();
 			}
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only members can access this resource.");
 	}
 
 	@GetMapping("${details.all.customer.url}")
@@ -85,6 +86,6 @@ public class CustomerRestController {
 				return ResponseEntity.notFound().build();
 			}
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only bank Employee can access this resource.");
 	}
 }

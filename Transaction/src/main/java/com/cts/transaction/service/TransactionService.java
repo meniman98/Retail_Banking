@@ -9,5 +9,5 @@ public interface TransactionService {
     TransactionStatus deposit (Long accountID, double amount, String bearerToken);
     TransactionStatus withdraw(Long accountID, double amount, String bearerToken);
     TransactionStatus transfer(Long sourceAccountID, Long destAccountID, double amount, String bearerToken);
-    List<Transaction> getTransaction(Long customerID);
+    List<Transaction> getTransaction(Long customerID, String bearerToken);
 }

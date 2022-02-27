@@ -33,9 +33,9 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public TransactionStatus deposit(Long accountId, double amount, String bearerToken) {
         try {
-            AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId);
+            AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId, bearerToken);
             CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId(), bearerToken);
-            TransactionStatus transactionStatus = accountMicroserviceProxy.deposit(accountId, amount);
+            TransactionStatus transactionStatus = accountMicroserviceProxy.deposit(accountId, amount, bearerToken);
             transactionStatus.setMessage("completed");
             transactionHistory(accountId, "+" + amount, customerData, "deposit",
                     "completed");
@@ -54,7 +54,7 @@ public class TransactionServiceImp implements TransactionService {
     public TransactionStatus withdraw(Long accountId, double amount, String bearerToken) {
         try {
             // get account info
-            AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId);
+            AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId, bearerToken);
             CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId(), bearerToken);
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterWithdrawal = accountData.getBalance() - amount;
@@ -70,7 +70,7 @@ public class TransactionServiceImp implements TransactionService {
                 return declinedStatus;
             }
             // otherwise, proceed to withdrawal
-            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(accountId, amount);
+            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(accountId, amount, bearerToken);
             transactionStatus.setMessage("completed");
             transactionHistory(accountId, "-" + amount, customerData, "withdraw",
                     "completed");
@@ -90,8 +90,8 @@ public class TransactionServiceImp implements TransactionService {
 
         try {
             // get account info
-            AccountSummary accountData = accountMicroserviceProxy.getAccount(sourceAccountID);
-            AccountSummary accountDataDest = accountMicroserviceProxy.getAccount(destAccountID);
+            AccountSummary accountData = accountMicroserviceProxy.getAccount(sourceAccountID, bearerToken);
+            AccountSummary accountDataDest = accountMicroserviceProxy.getAccount(destAccountID, bearerToken);
             CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountDataDest.getCustomerId(), bearerToken);
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterTransfer = accountData.getBalance() - amount;
@@ -107,11 +107,11 @@ public class TransactionServiceImp implements TransactionService {
                 return declinedStatus;
             }
             // otherwise, proceed to withdrawal
-            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(sourceAccountID, amount);
+            TransactionStatus transactionStatus = accountMicroserviceProxy.withdraw(sourceAccountID, amount, bearerToken);
             transactionStatus.setMessage("completed");
             transactionHistory(sourceAccountID, "-" + amount, customerData, "transfer",
                     "completed");
-            accountMicroserviceProxy.deposit(destAccountID, amount);
+            accountMicroserviceProxy.deposit(destAccountID, amount, bearerToken);
             transactionHistory(destAccountID, "+" + amount, customerData, "transfer",
                     "completed");
             return transactionStatus;
@@ -126,8 +126,8 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getTransaction(Long customerID) {
-        List<AccountSummary> accounts = accountMicroserviceProxy.getCustomerAccounts(customerID);
+    public List<Transaction> getTransaction(Long customerID, String bearerToken) {
+        List<AccountSummary> accounts = accountMicroserviceProxy.getCustomerAccounts(customerID, bearerToken);
         List<Transaction> transactionList = new ArrayList<>();
         for (AccountSummary accountData : accounts) {
             transactionList.addAll(transactionRepo.findByAccountID(accountData.getAccountId()));

@@ -57,10 +57,10 @@ public class CustomerRestControllerTest {
 		MockitoAnnotations.initMocks(this);
 		
 		// Mock CustomerService
-		Mockito.when(this.customerService.create(this.validCustomer)).thenReturn(this.customerCreationStatus);
-		Mockito.when(this.customerService.create(this.invalidCustomer)).thenReturn(null);		
-		Mockito.when(this.customerService.getDetailsById(this.SAVED_CUSTOMER_ID)).thenReturn(this.validCustomer);		
-		Mockito.when(this.customerService.getDetailsById(this.UNSAVED_CUSTOMER_ID)).thenReturn(null);		
+		Mockito.when(this.customerService.create(this.validCustomer, null)).thenReturn(this.customerCreationStatus);
+		Mockito.when(this.customerService.create(this.invalidCustomer, null)).thenReturn(null);		
+		Mockito.when(this.customerService.getDetailsById(this.SAVED_CUSTOMER_ID, null)).thenReturn(this.validCustomer);		
+		Mockito.when(this.customerService.getDetailsById(this.UNSAVED_CUSTOMER_ID, null)).thenReturn(null);		
 		
 		// Mock SecurityService
 		Mockito.when(this.securityService.hasCustomerRole(any())).thenReturn(true);

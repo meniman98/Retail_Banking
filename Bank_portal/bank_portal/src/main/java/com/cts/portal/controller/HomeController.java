@@ -87,16 +87,16 @@ public class HomeController {
 	@GetMapping("/transactions")
 	public String getTransactionAction(ModelMap model, @ModelAttribute("user") BankUser user, @ModelAttribute("bearerToken") String bearerToken) {
 		Customer customer = this.customerService.getCustomer(user.getCustomerFirstName(), bearerToken);
-		List<Transaction> transactions = this.transactionService.getTransactions(customer.getCustomerId());
+		List<Transaction> transactions = this.transactionService.getTransactions(customer.getCustomerId(), bearerToken);
 		model.addAttribute("transactions", transactions);
 		return "list-transaction";
 	}
 
 	@GetMapping("/statements")
 	public String getStatementsAction(ModelMap model, StatementQuery query,
-			@ModelAttribute("accounts") List<AccountSummary> accounts) {
+			@ModelAttribute("accounts") List<AccountSummary> accounts, @ModelAttribute("bearerToken") String bearerToken) {
 		model.addAttribute("accounts", accounts);
-		List<Statement> statements = this.transactionService.getStatements(accounts.get(0).getAccountId(), YearMonth.now().atDay(1), LocalDate.now());
+		List<Statement> statements = this.transactionService.getStatements(accounts.get(0).getAccountId(), YearMonth.now().atDay(1), LocalDate.now(), bearerToken);
 		query = new StatementQuery();
 		model.addAttribute("query", query);
 		model.addAttribute("statements", statements);
@@ -105,15 +105,15 @@ public class HomeController {
 
 	@PostMapping("/statements")
 	public String postStatementsAction(ModelMap model, @Valid StatementQuery query, BindingResult result,
-			@ModelAttribute("accounts") List<AccountSummary> accounts) {
+			@ModelAttribute("accounts") List<AccountSummary> accounts, @ModelAttribute("bearerToken") String bearerToken) {
 		if (!result.hasErrors()) {
 			if (query.getEndDate().isEmpty() || query.getStartDate().isEmpty()) {
-				List<Statement> statements = this.transactionService.getStatements(query.getAccountId(), YearMonth.now().atDay(1), LocalDate.now());
+				List<Statement> statements = this.transactionService.getStatements(query.getAccountId(), YearMonth.now().atDay(1), LocalDate.now(), bearerToken);
 				model.addAttribute("statements", statements);
 			} else {
 				LocalDate startDate = LocalDate.parse(query.getStartDate());
 				LocalDate endDate = LocalDate.parse(query.getEndDate());
-				List<Statement> statements = this.transactionService.getStatements(query.getAccountId(), startDate, endDate);
+				List<Statement> statements = this.transactionService.getStatements(query.getAccountId(), startDate, endDate, bearerToken);
 				model.addAttribute("statements", statements);
 			}
 			model.addAttribute("query", query);

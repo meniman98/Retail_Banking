@@ -36,6 +36,6 @@ public class TransactionController {
 
     @GetMapping(value = "/getTransaction/{customerID}")
     public List<Transaction> getTransaction(@PathVariable Long customerID, @RequestHeader(name = "Authorization", required = false) String bearerToken) {
-        return transactionService.getTransaction(customerID);
+        return transactionService.getTransaction(customerID, bearerToken);
     }
 }

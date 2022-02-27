@@ -23,5 +23,5 @@ public interface TransactionMicroserviceProxy {
 	public TransactionStatus transfer(@PathVariable Long sourceAccountId, @PathVariable Long destAccountID, @PathVariable double amount, @RequestHeader(name = "Authorization", required = false) String bearerToken);
 
 	@GetMapping(value = "/getTransaction/{customerID}")
-	public List<Transaction> getTransaction(@PathVariable Long customerID);
+	public List<Transaction> getTransaction(@PathVariable Long customerID, @RequestHeader(name = "Authorization", required = false) String bearerToken);
 }

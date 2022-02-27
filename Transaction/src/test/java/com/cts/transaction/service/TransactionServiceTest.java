@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 
 public class TransactionServiceTest {
 
@@ -78,17 +79,17 @@ public class TransactionServiceTest {
     @Test
     public void testValidDeposit() {
         Mockito.when(this.accountMicroserviceProxy.getAccount(1L)).thenReturn(this.accountsSummary.get(0));
-        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L)).thenReturn(this.customer);
+        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L, "")).thenReturn(this.customer);
         Mockito.when(this.accountMicroserviceProxy.deposit(1L, 100.0)).
                 thenReturn(this.validTransactionStatus);
-        TransactionStatus transactionStatus = transactionServiceImp.deposit(1L, 100.0);
+        TransactionStatus transactionStatus = transactionServiceImp.deposit(1L, 100.0, "");
         assertEquals("completed", transactionStatus.getMessage());
     }
 
     @Test
     public void testCancelDeposit() {
         //Fail connection with Account Microservice
-        TransactionStatus transactionStatus = transactionServiceImp.deposit(1L, 100.0);
+        TransactionStatus transactionStatus = transactionServiceImp.deposit(1L, 100.0, "");
         assertEquals("canceled", transactionStatus.getMessage());
     }
 
@@ -97,13 +98,13 @@ public class TransactionServiceTest {
         double amountWithdraw = 100.0;
         double balanceAfterWithdraw;
         Mockito.when(this.accountMicroserviceProxy.getAccount(1L)).thenReturn(this.accountsSummary.get(0));
-        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L)).thenReturn(this.customer);
+        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L, "")).thenReturn(this.customer);
         Mockito.when(this.accountMicroserviceProxy.withdraw(1L, amountWithdraw)).
                 thenReturn(this.validTransactionStatus);
         balanceAfterWithdraw = this.accountsSummary.get(0).getBalance() - amountWithdraw;
         Mockito.when(this.ruleMicroserviceProxy.evaluateMinBal(balanceAfterWithdraw,
                 this.accountsSummary.get(0).getAccountType())).thenReturn(this.ruleStatusOK);
-        TransactionStatus transactionStatus = transactionServiceImp.withdraw(1L, amountWithdraw);
+        TransactionStatus transactionStatus = transactionServiceImp.withdraw(1L, amountWithdraw, "");
         assertEquals("completed", transactionStatus.getMessage());
     }
 
@@ -112,13 +113,13 @@ public class TransactionServiceTest {
         double amountWithdraw = 1000.0;
         double balanceAfterWithdraw;
         Mockito.when(this.accountMicroserviceProxy.getAccount(1L)).thenReturn(this.accountsSummary.get(0));
-        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L)).thenReturn(this.customer);
+        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L, "")).thenReturn(this.customer);
         Mockito.when(this.accountMicroserviceProxy.withdraw(1L, amountWithdraw)).
                 thenReturn(this.validTransactionStatus);
         balanceAfterWithdraw = this.accountsSummary.get(0).getBalance() - amountWithdraw;
         Mockito.when(this.ruleMicroserviceProxy.evaluateMinBal(balanceAfterWithdraw,
                 this.accountsSummary.get(0).getAccountType())).thenReturn(this.rulesStatusNotOK);
-        TransactionStatus transactionStatus = transactionServiceImp.withdraw(1L, amountWithdraw);
+        TransactionStatus transactionStatus = transactionServiceImp.withdraw(1L, amountWithdraw, "");
         assertEquals("declined", transactionStatus.getMessage());
     }
 
@@ -128,14 +129,14 @@ public class TransactionServiceTest {
         double balanceAfterWithdraw;
         Mockito.when(this.accountMicroserviceProxy.getAccount(1L)).thenReturn(this.accountsSummary.get(0));
         Mockito.when(this.accountMicroserviceProxy.getAccount(2L)).thenReturn(this.accountsSummary.get(1));
-        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L)).thenReturn(this.customer);
+        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L, "")).thenReturn(this.customer);
         Mockito.when(this.accountMicroserviceProxy.withdraw(1L, amountWithdraw)).
                 thenReturn(this.validTransactionStatus);
         balanceAfterWithdraw = this.accountsSummary.get(0).getBalance() - amountWithdraw;
         Mockito.when(this.ruleMicroserviceProxy.evaluateMinBal(balanceAfterWithdraw,
                 this.accountsSummary.get(0).getAccountType())).thenReturn(this.ruleStatusOK);
         TransactionStatus transactionStatus = transactionServiceImp.transfer(1L, 2L,
-                amountWithdraw);
+                amountWithdraw, "");
         assertEquals("completed", transactionStatus.getMessage());
     }
 
@@ -145,14 +146,14 @@ public class TransactionServiceTest {
         double balanceAfterWithdraw;
         Mockito.when(this.accountMicroserviceProxy.getAccount(1L)).thenReturn(this.accountsSummary.get(0));
         Mockito.when(this.accountMicroserviceProxy.getAccount(2L)).thenReturn(this.accountsSummary.get(1));
-        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L)).thenReturn(this.customer);
+        Mockito.when(this.customerMicroserviceProxy.getCustomerDetails(1L, "")).thenReturn(this.customer);
         Mockito.when(this.accountMicroserviceProxy.withdraw(1L, amountWithdraw)).
                 thenReturn(this.validTransactionStatus);
         balanceAfterWithdraw = this.accountsSummary.get(0).getBalance() - amountWithdraw;
         Mockito.when(this.ruleMicroserviceProxy.evaluateMinBal(balanceAfterWithdraw,
                 this.accountsSummary.get(0).getAccountType())).thenReturn(this.rulesStatusNotOK);
         TransactionStatus transactionStatus = transactionServiceImp.transfer(1L, 2L,
-                amountWithdraw);
+                amountWithdraw, "");
         assertEquals("declined", transactionStatus.getMessage());
     }
 

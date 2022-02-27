@@ -31,10 +31,10 @@ public class TransactionServiceImp implements TransactionService {
     private RuleMicroserviceProxy ruleMicroserviceProxy;
 
     @Override
-    public TransactionStatus deposit(Long accountId, double amount) {
+    public TransactionStatus deposit(Long accountId, double amount, String bearerToken) {
         try {
             AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId);
-            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId());
+            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId(), bearerToken);
             TransactionStatus transactionStatus = accountMicroserviceProxy.deposit(accountId, amount);
             transactionStatus.setMessage("completed");
             transactionHistory(accountId, "+" + amount, customerData, "deposit",
@@ -51,11 +51,11 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public TransactionStatus withdraw(Long accountId, double amount) {
+    public TransactionStatus withdraw(Long accountId, double amount, String bearerToken) {
         try {
             // get account info
             AccountSummary accountData = accountMicroserviceProxy.getAccount(accountId);
-            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId());
+            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountData.getCustomerId(), bearerToken);
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterWithdrawal = accountData.getBalance() - amount;
             RuleStatus ruleStatus = ruleMicroserviceProxy.evaluateMinBal(balanceAfterWithdrawal,
@@ -86,13 +86,13 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public TransactionStatus transfer(Long sourceAccountID, Long destAccountID, double amount) {
+    public TransactionStatus transfer(Long sourceAccountID, Long destAccountID, double amount, String bearerToken) {
 
         try {
             // get account info
             AccountSummary accountData = accountMicroserviceProxy.getAccount(sourceAccountID);
             AccountSummary accountDataDest = accountMicroserviceProxy.getAccount(destAccountID);
-            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountDataDest.getCustomerId());
+            CustomerSummary customerData = customerMicroserviceProxy.getCustomerDetails(accountDataDest.getCustomerId(), bearerToken);
             // check wether the withdrawal will result in non maintenance of min balance
             double balanceAfterTransfer = accountData.getBalance() - amount;
             RuleStatus ruleStatus = ruleMicroserviceProxy.evaluateMinBal(balanceAfterTransfer,

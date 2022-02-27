@@ -124,9 +124,9 @@ public class HomeController {
 
 	@PostMapping("/operation")
 	public String postOperation(ModelMap model, @Valid Operation operation, BindingResult result, Transfer transfer,
-			RedirectAttributes attributes) {
+			RedirectAttributes attributes,  @ModelAttribute("bearerToken") String bearerToken) {
 		if (!result.hasErrors()) {
-			TransactionStatus status = this.transactionService.postOperation(operation);
+			TransactionStatus status = this.transactionService.postOperation(operation, bearerToken);
 			if (status != null) {
 				attributes.addFlashAttribute("status", status);
 				return "redirect:/dashboard";
@@ -138,9 +138,9 @@ public class HomeController {
 
 	@PostMapping("/transfer")
 	public String postTransfer(ModelMap model, @Valid Transfer transfer, BindingResult result, Operation operation,
-			RedirectAttributes attributes) {
+			RedirectAttributes attributes,  @ModelAttribute("bearerToken") String bearerToken) {
 		if (!result.hasErrors()) {
-			TransactionStatus status = this.transactionService.postTransfer(transfer);
+			TransactionStatus status = this.transactionService.postTransfer(transfer, bearerToken);
 			if (status != null) {
 				attributes.addFlashAttribute("status", status);
 				return "redirect:/dashboard";

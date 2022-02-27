@@ -24,22 +24,22 @@ public class TransactionService {
 	@Autowired
 	AccountMicroserviceProxy accountProxy;
 	
-	public TransactionStatus postTransfer(@Valid Transfer transfer) {
+	public TransactionStatus postTransfer(@Valid Transfer transfer, String bearerToken) {
 		try {
 			AccountSummary destAccount = this.accountProxy.getAccountNumber(transfer.getTargetAccountNo());
-			return transactionProxy.transfer(transfer.getSourceAccountId(), destAccount.getAccountId(), transfer.getAmount());
+			return transactionProxy.transfer(transfer.getSourceAccountId(), destAccount.getAccountId(), transfer.getAmount(), bearerToken);
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public TransactionStatus postOperation(Operation operation) {
+	public TransactionStatus postOperation(Operation operation, String bearerToken) {
 		try {
 			if (operation.getName().equals("Deposit")) {
-				return this.transactionProxy.deposit(operation.getAccountId(), operation.getAmount());
+				return this.transactionProxy.deposit(operation.getAccountId(), operation.getAmount(), bearerToken);
 			} else {
-				return this.transactionProxy.withdraw(operation.getAccountId(), operation.getAmount());
+				return this.transactionProxy.withdraw(operation.getAccountId(), operation.getAmount(), bearerToken);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

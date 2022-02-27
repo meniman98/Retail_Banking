@@ -16,33 +16,33 @@ public class BusinessRulesEngineTest {
 
 	@Test
 	public void testEvaluateWithAccountTypeSavingsAndBalanceLessThanZeroShouldReturnRejectedStatus() {
-		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-0.1, "savings");
+		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-0.1, "Savings");
 		assertEquals(REJECTED_STATUS, ruleStatus.getStatus());
-		ruleStatus = this.businessRulesEngine.evaluate(-50.0, "savings");
+		ruleStatus = this.businessRulesEngine.evaluate(-50.0, "Savings");
 		assertEquals(REJECTED_STATUS, ruleStatus.getStatus());
 	}
 	
 	@Test
 	public void testEvaluateWithAccountTypeSavingsAndBalanceEqualOrMoreThanZero() {
-		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(0.0, "savings");
+		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(0.0, "Savings");
 		assertEquals(businessRulesEngine.ACCEPTED_STATUS, ruleStatus.getStatus());
-		ruleStatus = this.businessRulesEngine.evaluate(50.0, "savings");
+		ruleStatus = this.businessRulesEngine.evaluate(50.0, "Savings");
 		assertEquals(ACCEPTED_STATUS, ruleStatus.getStatus());
 	}
 	
 	@Test
 	public void testEvaluateWithAccountTypeCurrentAndBalanceLessThanNegative50() {
-		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-50.9, "current");
+		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-50.9, "Current");
 		assertEquals(REJECTED_STATUS, ruleStatus.getStatus());
-		ruleStatus = this.businessRulesEngine.evaluate(-100.0, "current");
+		ruleStatus = this.businessRulesEngine.evaluate(-100.0, "Current");
 		assertEquals(REJECTED_STATUS, ruleStatus.getStatus());
 	}
 	
 	@Test
 	public void testEvaluateWithAccountTypeCurrentAndBalanceEqualOrMoreThanNegative50() {
-		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-50.0, "current");
+		RuleStatus ruleStatus = this.businessRulesEngine.evaluate(-50.0, "Current");
 		assertEquals(ACCEPTED_STATUS, ruleStatus.getStatus());
-		ruleStatus = this.businessRulesEngine.evaluate(100.0, "current");
+		ruleStatus = this.businessRulesEngine.evaluate(100.0, "Current");
 		assertEquals(ACCEPTED_STATUS, ruleStatus.getStatus());
 	}
 	

@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 
 import com.cts.portal.dto.Customer;
 import com.cts.portal.dto.CustomerCreationStatus;
+import com.cts.portal.dto.LoginUser;
 import com.cts.portal.model.Authority;
 import com.cts.portal.model.BankUser;
 import com.cts.portal.repository.AuthorityRepository;
 import com.cts.portal.repository.BankUserRepository;
+import com.cts.portal.security.SecurityRoleJwtMicroserviceProxy;
+import com.cts.portal.security.SecurityService;
 
 @Service
 public class CustomerService {
+	@Autowired
+	SecurityService securityService;
 	
 	@Autowired
 	CustomerMicroserviceProxy customerProxy;
@@ -29,9 +34,9 @@ public class CustomerService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public List<Customer> getCustomers() {
+	public List<Customer> getCustomers(String bearerToken) {
 		try {
-			return this.customerProxy.getAllCustomerDetails();
+			return this.customerProxy.getAllCustomerDetails(bearerToken);
 		} catch(Exception e) {
 			return null;
 		}
@@ -41,18 +46,18 @@ public class CustomerService {
 		return this.userRepo.findByEmail(email);
 	}
 	
-	public Customer getCustomer(String firstName) {
+	public Customer getCustomer(String firstName, String bearerToken) {
 		try {
-			return this.customerProxy.getCustomerDetailsByFirstName(firstName);
+			return this.customerProxy.getCustomerDetailsByFirstName(firstName, bearerToken);
 		} catch(Exception e) {
 			return null;
 		}
 	}
 	
-	public CustomerCreationStatus createCustomer(Customer customer) {
+	public CustomerCreationStatus createCustomer(Customer customer, String bearerToken) {
 		Customer newCustomer = this.buildCustomer(customer);
 		try {
-			CustomerCreationStatus status = this.customerProxy.postCreateAccount(newCustomer);
+			CustomerCreationStatus status = this.customerProxy.postCreateAccount(newCustomer, bearerToken);
 			BankUser newCustomerUser = new BankUser();
 			newCustomerUser.setAuthorities(new HashSet<>());
 			newCustomerUser.setPassword(this.passwordEncoder.encode(customer.getPassword()));
@@ -61,8 +66,15 @@ public class CustomerService {
 			Authority customerAuthority = new Authority();
 			customerAuthority.setName("ROLE_CUSTOMER");
 			newCustomerUser.getAuthorities().add(customerAuthority);
-			this.userRepo.save(newCustomerUser);
-			return status;
+			LoginUser login = new LoginUser();
+			login.setPassword(customer.getPassword());
+			login.setUsername(newCustomer.getEmail());
+			if (this.securityService.register(login)) {
+				this.userRepo.save(newCustomerUser);
+				return status;
+			} else {
+				throw new Exception("User not registered !");
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 			CustomerCreationStatus failedStatus = new CustomerCreationStatus();

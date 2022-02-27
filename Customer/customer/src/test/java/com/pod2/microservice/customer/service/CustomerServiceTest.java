@@ -3,6 +3,7 @@ package com.pod2.microservice.customer.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -57,58 +58,58 @@ public class CustomerServiceTest {
 		Mockito.when(this.customerRepository.findByCustomerId(UNSAVED_CUSTOMER_ID)).thenReturn(null);
 
 		// Mock AccountMicroserviceProxy
-		Mockito.when(this.accountMicroserviceProxy.postCreateAccount(this.validCustomer.getCustomerId()))
+		Mockito.when(this.accountMicroserviceProxy.postCreateAccount(this.validCustomer.getCustomerId(), ""))
 				.thenReturn(this.accountStatus);
-		Mockito.when(this.accountMicroserviceProxy.getCustomerAccounts(this.validCustomer.getCustomerId()))
+		Mockito.when(this.accountMicroserviceProxy.getCustomerAccounts(this.validCustomer.getCustomerId(), ""))
 				.thenReturn(this.accountsSummary);
 	}
 
 	@Test
 	public void testCreateValidCustomerReturnStatusObject() {
-		CustomerCreationStatus status = this.customerService.create(this.validCustomer);
+		CustomerCreationStatus status = this.customerService.create(this.validCustomer, "");
 		assertNotNull(status);
 	}
 
 	@Test
 	public void testCreateInvalidCustomerReturnNull() {
-		CustomerCreationStatus status = this.customerService.create(this.invalidCustomer);
+		CustomerCreationStatus status = this.customerService.create(this.invalidCustomer, "");
 		assertNull(status);
 	}
 
 	@Test
 	public void testCreateValidCustomerCallAccountMicroservicePostCreateAccountOnce() {
-		this.customerService.create(this.validCustomer);
-		verify(this.accountMicroserviceProxy, times(1)).postCreateAccount(this.validCustomer.getCustomerId());
+		this.customerService.create(this.validCustomer, "");
+		verify(this.accountMicroserviceProxy, times(1)).postCreateAccount(this.validCustomer.getCustomerId(), "");
 	}
 
 	@Test
 	public void testCreateInvalidCustomerNeverCallAccountMicroservice() {
-		this.customerService.create(this.invalidCustomer);
-		verify(this.accountMicroserviceProxy, never()).postCreateAccount(this.invalidCustomer.getCustomerId());
+		this.customerService.create(this.invalidCustomer, "");
+		verify(this.accountMicroserviceProxy, never()).postCreateAccount(this.invalidCustomer.getCustomerId(), "");
 	}
 
 	@Test
 	public void testCreateValidCustomerAddCreationStatus() {
-		CustomerCreationStatus status = this.customerService.create(this.validCustomer);
+		CustomerCreationStatus status = this.customerService.create(this.validCustomer, "");
 		assertEquals(this.customerService.MSG_CUSTOMER_CREATION_SUCCESS, status.getMessage());
 	}
 
 	@Test
 	public void testGetDetailsByIdWithExistingCustomerReturnObject() {
-		Customer customer = this.customerService.getDetailsById(SAVED_CUSTOMER_ID);
+		Customer customer = this.customerService.getDetailsById(SAVED_CUSTOMER_ID, "");
 		assertNotNull(customer);
 	}
 
 	@Test
 	public void testGetDetailsByIdWithNoneExistingCustomerReturnNull() {
-		Customer customer = this.customerService.getDetailsById(UNSAVED_CUSTOMER_ID);
+		Customer customer = this.customerService.getDetailsById(UNSAVED_CUSTOMER_ID, "");
 		assertNull(customer);
 	}
 
 	@Test
 	public void testGetDetailsByIdWithExistingCustomerCallAccountMicroserviceGetCustomerAccountsOnce() {
-		this.customerService.getDetailsById(SAVED_CUSTOMER_ID);
-		verify(this.accountMicroserviceProxy, times(1)).getCustomerAccounts(this.validCustomer.getCustomerId());
+		this.customerService.getDetailsById(SAVED_CUSTOMER_ID, "");
+		verify(this.accountMicroserviceProxy, times(1)).getCustomerAccounts(this.validCustomer.getCustomerId(), "");
 	}
 
 }

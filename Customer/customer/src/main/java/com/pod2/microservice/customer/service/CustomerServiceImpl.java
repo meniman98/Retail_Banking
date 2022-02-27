@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public String MSG_CUSTOMER_ACCOUNT_CREATION_FAILURE;
 
 	@Override
-	public CustomerCreationStatus create(Customer customer) {
+	public CustomerCreationStatus create(Customer customer, String bearerToken) {
 		// create customer
 		Customer newCustomer = customerRepository.save(customer);
 		CustomerCreationStatus status = null;
@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 			try {
 				this.log.info("Interract with Account Microservice to request Accounts creation for new Customer with ID = " + newCustomer.getCustomerId());
 				AccountCreationStatus accountCreationStatus = accountMicroserviceProxy
-						.postCreateAccount(newCustomer.getCustomerId());
+						.postCreateAccount(newCustomer.getCustomerId(), bearerToken);
 				if (null != accountCreationStatus && !accountCreationStatus.getMessage().isEmpty()) {
 					newCustomer.getCustomerCreationStatus().add(new CustomerCreationStatus(MSG_CUSTOMER_ACCOUNT_CREATION_SUCCESS));
 					this.log.info("Successfully created default Accounts for new Customer with ID = " + newCustomer.getCustomerId());
@@ -68,14 +68,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getDetailsById(Long customerId) {
+	public Customer getDetailsById(Long customerId, String bearerToken) {
 		Customer customer = this.customerRepository.findByCustomerId(customerId);
 		if (null != customer) {
 			this.log.info("Successfully fetched details of Customer with ID = " + customerId + " in Database");
 			try {
 				this.log.info("Interract with Account Microservice to request Accounts summary of Customer with ID = " + customerId);
 				List<AccountSummary> accountsSummary = this.accountMicroserviceProxy
-						.getCustomerAccounts(customer.getCustomerId());
+						.getCustomerAccounts(customer.getCustomerId(), bearerToken);
 				if (null != accountsSummary && !accountsSummary.isEmpty()) {
 					customer.setAccountsSummary(accountsSummary);
 					this.log.info("Successfully fetched Accounts summary of Customer with ID = " + customerId);
@@ -90,14 +90,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getDetailsByFirstName(String firstName) {
+	public Customer getDetailsByFirstName(String firstName, String bearerToken) {
 		Customer customer = this.customerRepository.findByFirstName(firstName);
 		if (null != customer) {
 			this.log.info("Successfully fetched details of Customer with First Name = " + firstName + " in Database");
 			try {
 				this.log.info("Interract with Account Microservice to request Accounts summary of Customer with First Name = " + firstName);
 				List<AccountSummary> accountsSummary = this.accountMicroserviceProxy
-						.getCustomerAccounts(customer.getCustomerId());
+						.getCustomerAccounts(customer.getCustomerId(), bearerToken);
 				if (null != accountsSummary && !accountsSummary.isEmpty()) {
 					customer.setAccountsSummary(accountsSummary);
 					this.log.info("Successfully fetched Accounts summary of Customer with FirstName = " + firstName);

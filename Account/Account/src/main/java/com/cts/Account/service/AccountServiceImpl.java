@@ -18,6 +18,7 @@ import com.cts.Account.repo.AccountRepo;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+
 	@Autowired
 	AccountRepo accountRepo;
 

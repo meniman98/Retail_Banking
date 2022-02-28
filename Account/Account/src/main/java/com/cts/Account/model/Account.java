@@ -40,9 +40,9 @@ public class Account {
         this.customerId = customer;
     }
 
-    public Account(long accountId, String accountType) {
+    public Account(long accountId, long customerId) {
         this.accountId = accountId;
-        this.accountType = accountType;
+        this.customerId = customerId;
     }
 
     public Account() {}

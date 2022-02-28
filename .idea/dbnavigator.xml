@@ -26,8 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="89ab75a5-8fea-4af6-a9ed-8015c04416e8">
-        <schema name="account" object-types="table, view, procedure, function, column" />
-        <schema name="mysql" object-types="table, view, function" />
+        <schema name="account" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>

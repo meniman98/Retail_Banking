@@ -4,7 +4,6 @@ import com.cts.Account.Utils;
 import com.cts.Account.model.Statement;
 import com.cts.Account.repo.AccountRepo;
 import com.cts.Account.repo.StatementRepo;
-import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

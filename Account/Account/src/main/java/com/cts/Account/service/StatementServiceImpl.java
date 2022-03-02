@@ -15,14 +15,14 @@ import java.util.List;
 @Service
 public class StatementServiceImpl implements StatementService {
 
-    @Autowired
     StatementRepo statementRepo;
 
     AccountRepo accountRepo;
 
     @Autowired
-    public StatementServiceImpl(AccountRepo accountRepo) {
+    public StatementServiceImpl(AccountRepo accountRepo, StatementRepo statementRepo) {
         this.accountRepo = accountRepo;
+        this.statementRepo = statementRepo;
     }
 
     @Override

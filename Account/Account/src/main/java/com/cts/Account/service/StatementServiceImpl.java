@@ -18,6 +18,8 @@ public class StatementServiceImpl implements StatementService {
     @Autowired
     StatementRepo statementRepo;
 
+    AccountRepo accountRepo;
+
     @Autowired
     public StatementServiceImpl(AccountRepo accountRepo) {
         this.accountRepo = accountRepo;

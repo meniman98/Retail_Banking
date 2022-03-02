@@ -19,7 +19,9 @@ public class StatementServiceImpl implements StatementService {
     StatementRepo statementRepo;
 
     @Autowired
-    AccountRepo accountRepo;
+    public StatementServiceImpl(AccountRepo accountRepo) {
+        this.accountRepo = accountRepo;
+    }
 
     @Override
     public List<Statement> getStatementListByDate(Long accountId, LocalDate startDate, LocalDate endDate) {

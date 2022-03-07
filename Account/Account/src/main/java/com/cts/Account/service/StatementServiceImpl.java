@@ -4,7 +4,6 @@ import com.cts.Account.Utils;
 import com.cts.Account.model.Statement;
 import com.cts.Account.repo.AccountRepo;
 import com.cts.Account.repo.StatementRepo;
-import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,15 @@ import java.util.List;
 @Service
 public class StatementServiceImpl implements StatementService {
 
-    @Autowired
     StatementRepo statementRepo;
 
-    @Autowired
     AccountRepo accountRepo;
+
+    @Autowired
+    public StatementServiceImpl(AccountRepo accountRepo, StatementRepo statementRepo) {
+        this.accountRepo = accountRepo;
+        this.statementRepo = statementRepo;
+    }
 
     @Override
     public List<Statement> getStatementListByDate(Long accountId, LocalDate startDate, LocalDate endDate) {

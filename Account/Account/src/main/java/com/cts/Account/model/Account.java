@@ -40,6 +40,11 @@ public class Account {
         this.customerId = customer;
     }
 
+    public Account(long accountId, long customerId) {
+        this.accountId = accountId;
+        this.customerId = customerId;
+    }
+
     public Account() {}
 
     @Override

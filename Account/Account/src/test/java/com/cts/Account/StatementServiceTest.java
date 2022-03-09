@@ -14,8 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StatementServiceTest {
@@ -31,13 +30,16 @@ public class StatementServiceTest {
 
     @Test
     void getSingleStatement() {
+        Statement repoStatement = new Statement();
+
         Mockito.when(accountRepo.existsById(1L))
                 .thenReturn(true);
 
         Mockito.when(statementRepo.findByDate(1L))
-                .thenReturn(new Statement());
+                .thenReturn(repoStatement);
 
-        statementService.getSingleStatement(1L);
+        Statement retrievedStatement = statementService.getSingleStatement(1L);
+        assertSame(repoStatement, retrievedStatement);
     }
 
     @Test
@@ -47,9 +49,7 @@ public class StatementServiceTest {
 
         ResponseStatusException exception =
                 assertThrows(ResponseStatusException.class, () -> {
-                   Statement statement = statementService.getSingleStatement(1L);
-//            FIXME this line isn't executed
-                    assertNull(statement);
+                   statementService.getSingleStatement(1L);
                 });
 
         assertThat(exception.getReason(),is(Utils.STATEMENT_NOT_FOUND));

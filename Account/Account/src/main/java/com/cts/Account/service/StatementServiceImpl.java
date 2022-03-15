@@ -15,15 +15,12 @@ import java.util.List;
 @Service
 public class StatementServiceImpl implements StatementService {
 
+    @Autowired
     StatementRepo statementRepo;
 
+    @Autowired
     AccountRepo accountRepo;
 
-    @Autowired
-    public StatementServiceImpl(AccountRepo accountRepo, StatementRepo statementRepo) {
-        this.accountRepo = accountRepo;
-        this.statementRepo = statementRepo;
-    }
 
     @Override
     public List<Statement> getStatementListByDate(Long accountId, LocalDate startDate, LocalDate endDate) {

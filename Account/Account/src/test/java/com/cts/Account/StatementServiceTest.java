@@ -12,6 +12,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +32,8 @@ public class StatementServiceTest {
 
     @InjectMocks
     StatementServiceImpl statementService;
+
+//    Tests for getSingleStatement()
 
     @Test
     void getSingleStatement() {
@@ -65,6 +72,38 @@ public class StatementServiceTest {
         assertThat(exception.getReason(),is(Utils.ACCOUNT_NOT_FOUND));
         assertThat(exception.getRawStatusCode(),is(404));
     }
+
+//    Tests for getStatementListByDate()
+
+    @Test
+    void getStatementListByDate() {
+//        initialise objects
+        List<Statement> initialStatementList = new ArrayList<>();
+        for (int i = 1; i < 7; i++) {
+            Statement statement = new Statement();
+            statement.setDate(LocalDate.of(2022, i, 1));
+            initialStatementList.add(statement);
+        }
+        LocalDate jan = LocalDate.of(2022, 1, 1);
+        LocalDate june = LocalDate.of(2022, 6, 1);
+//        mocks
+        Mockito.when(accountRepo.existsById(1L)).thenReturn(true);
+        Mockito.when(statementRepo.findAllByDate(1L, jan, june))
+                .thenReturn(initialStatementList);
+
+        List<Statement> retrievedStatementList =
+                statementService.getStatementListByDate(1L, jan, june);
+
+        assertNotNull(retrievedStatementList);
+        assertThat(retrievedStatementList, is(initialStatementList));
+        assertThat(retrievedStatementList.size(), is(6));
+        assertThat(retrievedStatementList.get(0).getDate().getMonth(),is(Month.JANUARY));
+        assertThat(retrievedStatementList.get(2).getDate().getMonth(), is(Month.MARCH));
+
+
+    }
+
+
 
 
 

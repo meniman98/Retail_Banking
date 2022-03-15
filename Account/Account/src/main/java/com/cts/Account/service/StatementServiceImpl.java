@@ -15,20 +15,18 @@ import java.util.List;
 @Service
 public class StatementServiceImpl implements StatementService {
 
+    @Autowired
     StatementRepo statementRepo;
 
+    @Autowired
     AccountRepo accountRepo;
 
-    @Autowired
-    public StatementServiceImpl(AccountRepo accountRepo, StatementRepo statementRepo) {
-        this.accountRepo = accountRepo;
-        this.statementRepo = statementRepo;
-    }
 
     @Override
     public List<Statement> getStatementListByDate(Long accountId, LocalDate startDate, LocalDate endDate) {
         if (accountRepo.existsById(accountId)) {
-            List<Statement> statementList = statementRepo.findAllByDate(accountId, startDate, endDate);
+            List<Statement> statementList =
+                    statementRepo.findAllByDate(accountId, startDate, endDate);
 //            if (statementList.isEmpty()) {
 ////                Account ID exists but doesn't belong to any statement
 //                throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.STATEMENT_NOT_FOUND);
@@ -53,12 +51,9 @@ public class StatementServiceImpl implements StatementService {
             }
             return statement;
         }
-        else if (!accountRepo.existsById(accountId)) {
+        else {
 //            This Account ID doesn't exist
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.ACCOUNT_NOT_FOUND);
-        } else {
-//            Internal server error
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

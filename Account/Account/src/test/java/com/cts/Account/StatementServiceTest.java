@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -50,7 +51,7 @@ public class StatementServiceTest {
     }
 
     @Test
-    void accountExistsButDoesNotBelongToAnyStatement() {
+    void accountExistsButDoesNotBelongToAnySingleStatement() {
         Mockito.when(accountRepo.existsById(1L)).thenReturn(true);
         Mockito.when(statementRepo.findByDate(1L)).thenReturn(null);
 
@@ -99,9 +100,42 @@ public class StatementServiceTest {
         assertThat(retrievedStatementList.size(), is(6));
         assertThat(retrievedStatementList.get(0).getDate().getMonth(),is(Month.JANUARY));
         assertThat(retrievedStatementList.get(2).getDate().getMonth(), is(Month.MARCH));
+    }
+
+    @Test
+    void accountExistsButDoesNotBelongToAnyListOfStatements() {
+        List<Statement> initialStatementList = new ArrayList<>();
+        LocalDate jan = LocalDate.of(2022, 1, 1);
+        LocalDate june = LocalDate.of(2022, 6, 1);
+
+        Mockito.when(accountRepo.existsById(1L)).thenReturn(true);
+        Mockito.when(statementRepo.findAllByDate(1L, jan, june))
+                .thenReturn(initialStatementList);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
+                statementService.getStatementListByDate(1L, jan, june));
+
+        assertThat(exception.getRawStatusCode(), is(404));
+        assertThat(exception.getStatus(), is(HttpStatus.NOT_FOUND));
+        assertThat(exception.getReason(), is(Utils.STATEMENT_NOT_FOUND));
 
 
     }
+
+    @Test
+    void accountDoesNotExistList() {
+        Mockito.when(accountRepo.existsById(1L)).thenReturn(false);
+        LocalDate jan = LocalDate.of(2022, 1, 1);
+        LocalDate june = LocalDate.of(2022, 6, 1);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
+                statementService.getStatementListByDate(1L, jan, june));
+
+        assertThat(exception.getReason(),is(Utils.ACCOUNT_NOT_FOUND));
+        assertThat(exception.getRawStatusCode(),is(404));
+    }
+
+
 
 
 

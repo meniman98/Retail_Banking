@@ -32,12 +32,9 @@ public class StatementServiceImpl implements StatementService {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.STATEMENT_NOT_FOUND);
             }
             return statementList;
-        } else if (!accountRepo.existsById(accountId)) {
+        } else {
 //            This Account ID doesn't exist
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Utils.ACCOUNT_NOT_FOUND);
-        } else {
-//            Internal server error
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

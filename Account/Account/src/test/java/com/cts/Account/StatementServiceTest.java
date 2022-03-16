@@ -38,16 +38,18 @@ public class StatementServiceTest {
 
     @Test
     void getSingleStatement() {
-        Statement repoStatement = new Statement();
+        Statement dummyStatement = new Statement();
 
         Mockito.when(accountRepo.existsById(1L))
                 .thenReturn(true);
 
         Mockito.when(statementRepo.findByDate(1L))
-                .thenReturn(repoStatement);
+                .thenReturn(dummyStatement);
 
         Statement retrievedStatement = statementService.getSingleStatement(1L);
-        assertSame(repoStatement, retrievedStatement);
+
+        Mockito.verify(statementRepo, Mockito.atMostOnce()).findByDate(1L);
+        assertSame(dummyStatement, retrievedStatement);
     }
 
     @Test
@@ -56,12 +58,11 @@ public class StatementServiceTest {
         Mockito.when(statementRepo.findByDate(1L)).thenReturn(null);
 
         ResponseStatusException exception =
-                assertThrows(ResponseStatusException.class, () -> {
-                   statementService.getSingleStatement(1L);
-                });
+                assertThrows(ResponseStatusException.class, () ->
+                        statementService.getSingleStatement(1L));
 
-        assertThat(exception.getReason(),is(Utils.STATEMENT_NOT_FOUND));
-        assertThat(exception.getRawStatusCode(),is(404));
+        assertThat(exception.getReason(), is(Utils.STATEMENT_NOT_FOUND));
+        assertThat(exception.getRawStatusCode(), is(404));
     }
 
     @Test
@@ -70,8 +71,8 @@ public class StatementServiceTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
                 statementService.getSingleStatement(1L));
 
-        assertThat(exception.getReason(),is(Utils.ACCOUNT_NOT_FOUND));
-        assertThat(exception.getRawStatusCode(),is(404));
+        assertThat(exception.getReason(), is(Utils.ACCOUNT_NOT_FOUND));
+        assertThat(exception.getRawStatusCode(), is(404));
     }
 
 //    Tests for getStatementListByDate()
@@ -98,7 +99,7 @@ public class StatementServiceTest {
         assertNotNull(retrievedStatementList);
         assertThat(retrievedStatementList, is(initialStatementList));
         assertThat(retrievedStatementList.size(), is(6));
-        assertThat(retrievedStatementList.get(0).getDate().getMonth(),is(Month.JANUARY));
+        assertThat(retrievedStatementList.get(0).getDate().getMonth(), is(Month.JANUARY));
         assertThat(retrievedStatementList.get(2).getDate().getMonth(), is(Month.MARCH));
     }
 
@@ -131,15 +132,9 @@ public class StatementServiceTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
                 statementService.getStatementListByDate(1L, jan, june));
 
-        assertThat(exception.getReason(),is(Utils.ACCOUNT_NOT_FOUND));
-        assertThat(exception.getRawStatusCode(),is(404));
+        assertThat(exception.getReason(), is(Utils.ACCOUNT_NOT_FOUND));
+        assertThat(exception.getRawStatusCode(), is(404));
     }
-
-
-
-
-
-
 
 
 }
